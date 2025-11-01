@@ -24,7 +24,6 @@ Carta 1 e Carta 2.
         Área: 1521.11 km²
         PIB: 699.28 bilhões de reais
         Número de Pontos Turísticos: 50
-        teste
 */
 
 #include <stdio.h>
