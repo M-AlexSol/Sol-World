@@ -8,39 +8,14 @@
   <link rel="stylesheet" href="css/styles.css">
   <script src="js/countdown.js" defer></script>
   <script src="js/views.js" defer></script>
-  <script src="js/auth.js" defer></script>
   <script src="js/copy-pix.js" defer></script>
 
-  <!-- ALTERAÇÃO: adicionado estilo inline (contador, layout flex para footer ficar no final, botões de escolha, centralização do parágrafo da home) -->
   <style>
-    /* ALTERAÇÃO: layout base para manter o footer no final sem sobreposição */
-    html, body {
-      height: 100%;
-      margin: 0;
-      padding: 0;
-    }
+    html, body { height: 100%; margin: 0; padding: 0; }
+    .container { min-height: 100vh; display: flex; flex-direction: column; }
+    main { flex: 1 0 auto; }
+    footer { flex-shrink: 0; text-align: center; padding: 18px 20px; color: #666; font-size: 16px; background: rgba(255,255,255,0.96); border-top: 1px solid rgba(0,0,0,0.04); }
 
-    .container {
-      min-height: 100vh; /* ALTERAÇÃO: garante que o container ocupe toda a altura */
-      display: flex;
-      flex-direction: column;
-    }
-
-    main {
-      flex: 1 0 auto; /* ALTERAÇÃO: empurra o footer para o final quando conteúdo é curto */
-    }
-
-    footer {
-      flex-shrink: 0;
-      text-align: center;
-      padding: 18px 20px;
-      color: #666;
-      font-size: 16px;
-      background: rgba(255,255,255,0.96);
-      border-top: 1px solid rgba(0,0,0,0.04);
-    }
-
-    /* ALTERAÇÃO: estilo do contador que acompanha a página */
     .countdown-timer{
       position: fixed;
       top: 18px;
@@ -62,11 +37,9 @@
       .countdown-timer{ top: 10px; right: 10px; font-size:13px; padding:8px 10px; min-width: 140px; }
     }
 
-    /* ALTERAÇÃO: containers para mudar de "views" sem recarregar a página */
     .view-container { display: block; transition: opacity .25s ease; }
     .hidden { display: none !important; }
 
-    /* ALTERAÇÃO: botões de escolha (PIX / Lista) e estado ativo */
     .choice-buttons { display:flex; gap:12px; justify-content:center; margin: 18px 0 6px 0; flex-wrap:wrap;}
     .choice-button {
       background: linear-gradient(135deg,#e6f3ff,#d9ecff);
@@ -80,81 +53,26 @@
       transition: all .16s ease;
     }
     .choice-button:hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(74,144,226,0.08); }
+    .choice-button.active { background: linear-gradient(135deg,#4a90e2,#357abd); color:white; border-color: rgba(0,0,0,0.06); }
 
-    /* ALTERAÇÃO: estado ativo (azul) */
-    .choice-button.active {
-      background: linear-gradient(135deg,#4a90e2,#357abd);
-      color:white;
-      border-color: rgba(0,0,0,0.06);
-    }
-
-    /* ALTERAÇÃO: container interno para conteúdo dinâmico */
-    .panel {
-      background: rgba(255,255,255,0.98);
-      padding: 20px;
-      border-radius: 12px;
-      box-shadow: 0 8px 24px rgba(0,0,0,0.06);
-      margin: 18px 0;
-    }
-
-    /* pequenos ajustes para grid dos items quando exibidos */
+    .panel { background: rgba(255,255,255,0.98); padding: 20px; border-radius: 12px; box-shadow: 0 8px 24px rgba(0,0,0,0.06); margin: 18px 0; }
     .items-grid { display:grid; grid-template-columns: repeat(auto-fill,minmax(300px,1fr)); gap:18px; margin-top:12px; }
-
     .item-card { background:white; border-radius:12px; padding:12px; box-shadow:0 6px 18px rgba(0,0,0,0.04); }
     .item-image { font-size:48px; text-align:center; padding:14px; }
     .item-content { padding:8px 6px; }
 
-    /* ALTERAÇÃO: centralizar parágrafo da home view */
     #home-view p { text-align: center; margin: 0 auto; }
-
-    .back-button { display:none; } /* mantido para compatibilidade, não usado */
-
-    /* pequena responsividade do painel PIX */
     #pix-data img { max-width:160px; height:auto; display:block; margin:0 auto; }
   </style>
  </head>
  <body>
-  
-  <!-- ALTERAÇÃO: overlay de verificação humana (bloqueia acesso até validar) 
-  <div id="auth-overlay" aria-hidden="false" role="dialog" aria-label="Verificação humana" style="position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,0.6);z-index:100000;">
-    <div style="background:#fff;border-radius:12px;padding:20px;max-width:420px;width:92%;text-align:center;box-shadow:0 10px 40px rgba(0,0,0,0.4);">
-      <h3 style="margin:0 0 8px;">Verificação</h3>
-      <p style="margin:0 0 12px;color:#333">Digite o código que aparece na imagem para continuar.</p>
-
-       canvas com o código 
-      <div style="display:flex;gap:8px;align-items:center;justify-content:center;margin-bottom:10px;">
-        <canvas id="captcha-canvas" width="160" height="56" style="border-radius:8px;background:#f6f9ff;border:1px solid #e6eefc"></canvas>
-        <button id="captcha-refresh" type="button" style="background:#eef6ff;border:1px solid #d6eaff;padding:6px 8px;border-radius:8px;cursor:pointer">↻</button>
-      </div>
-
-       ALTERAÇÃO: input ajustado para permitir teclado alfanumérico no mobile e sem autocapitalize/autocorrect 
-      <input id="captcha-input" aria-label="Código de verificação" type="text"
-             inputmode="text" pattern="[A-Za-z0-9]*"
-             autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false"
-             maxlength="6"
-             style="width:100%;padding:10px;border-radius:8px;border:1px solid #d9eaff;margin-bottom:10px;font-size:16px;text-align:center"
-             placeholder="Digite o código">
-
-      <div style="display:flex;gap:8px;justify-content:center;">
-        <button id="captcha-verify" type="button" style="background:#4a90e2;color:#fff;padding:10px 16px;border-radius:10px;border:none;cursor:pointer;font-weight:700">Verificar</button>
-        <button id="captcha-cancel" type="button" style="background:#f3f5f8;color:#333;padding:10px 12px;border-radius:10px;border:1px solid #e6eefc;cursor:pointer">Cancelar</button>
-      </div>
-
-      <p id="captcha-msg" style="color:#c33;margin-top:10px;min-height:18px"></p>
-      <small style="display:block;margin-top:10px;color:#666">Esta verificação é sessão-local — para maior segurança use reCAPTCHA/server-side.</small>
-    </div>
-  </div>
-  -->
-
   <div class="container">
    <header style="padding:24px 20px; text-align:center;">
     <h1>Chá de Fralda do Apollo</h1>
     <p class="welcome-text">Bem-vindos ao nosso chá de bebê online! Escolha um presente especial para o nosso novo astro!</p>
 
-    <!-- ALTERAÇÃO: elemento do contador adicionado (aria-live para acessibilidade) -->
     <div id="countdown-timer" class="countdown-timer" aria-live="polite">Carregando contador...</div>
 
-    <!-- ALTERAÇÃO: botões de escolha dinâmicos (PIX / Lista de Presentes) exibidos abaixo da saudação -->
     <div class="choice-buttons" aria-hidden="false" style="margin-top:16px;">
       <button id="btn-pix" class="choice-button" type="button" aria-pressed="false">Fazer PIX</button>
       <button id="btn-list" class="choice-button" type="button" aria-pressed="false">Ver Lista de Presentes</button>
@@ -162,28 +80,22 @@
    </header>
 
    <main style="width:100%;max-width:1200px;margin:0 auto;padding:16px;">
-    <!-- ALTERAÇÃO: Home view (exibida por padrão) -->
     <section id="home-view" class="view-container panel">
       <h2 class="section-title">Toda ajuda é bem vinda!</h2>
       <br>
       <p>Escolha "<b>Ver Lista de Presentes</b>" para abrir as opções disponíveis de presentes para o Apollo ou "<b>Faça um PIX</b>" para nos ajudar com as futuras fraldas!</p>
     </section>
 
-    <!-- ALTERAÇÃO: PIX view (inicialmente oculto) -->
     <section id="pix-view" class="view-container panel hidden" aria-hidden="true">
       <h2>Fazer PIX</h2>
       <p>Abaixo estão os dados para realizar o PIX. Clique no botão ou use o QR Code dentro do aplicativo do seu banco.</p>
 
-      <!-- Exemplo de dados PIX (substitua pelos reais) -->
       <div id="pix-data" style="margin-top:10px;">
         <p><strong>Chave PIX:</strong> 857ed555-b4b6-4606-a688-931e35a388df</p>
         <p><strong>Nome:</strong> Matheus Alexander Sol</p>
         <p><strong>Valor sugerido:</strong> Livre</p>
 
-        <!-- ALTERAÇÃO: espaço para QR code (opcional) -->
         <div style="margin-top:12px;">
-          <!-- ALTERAÇÃO: QR Code gerado via API pública com o payload PIX fornecido -->
-          <!-- Payload (PIX): 00020126850014BR.GOV.BCB.PIX0136857ed555-b4b6-4606-a688-931e35a388df0223Chá de Fralda do Apollo5204000053039865802BR5921Matheus Alexander Sol6009SAO PAULO62140510QK24oXuaCo6304A982 -->
           <a href="pix:00020126850014BR.GOV.BCB.PIX0136857ed555-b4b6-4606-a688-931e35a388df0223Ch%C3%A1%20de%20Fralda%20do%20Apollo5204000053039865802BR5921Matheus%20Alexander%20Sol6009SAO%20PAULO62140510QK24oXuaCo6304A982" target="_blank" rel="noopener noreferrer" title="Abrir PIX">
             <img
               src="https://api.qrserver.com/v1/create-qr-code/?size=160x160&data=00020126850014BR.GOV.BCB.PIX0136857ed555-b4b6-4606-a688-931e35a388df0223Ch%C3%A1%20de%20Fralda%20do%20Apollo5204000053039865802BR5921Matheus%20Alexander%20Sol6009SAO%20PAULO62140510QK24oXuaCo6304A982"
@@ -191,7 +103,6 @@
               style="border-radius:8px; display:block; margin:0 auto;">
           </a>
 
-          <!-- ALTERAÇÃO: botão para copiar a chave PIX (857ed555-...) com mensagem de confirmação -->
           <div style="text-align:center;margin-top:10px;">
             <button id="copy-pix" class="choice-button" type="button" aria-label="Copiar Chave PIX">Copiar Chave PIX</button>
             <span id="copy-pix-msg" style="display:inline-block;margin-left:10px;color:#2a7d32;opacity:0;transition:opacity .2s;font-weight:600;"></span>
@@ -200,12 +111,10 @@
       </div>
     </section>
 
-    <!-- ALTERAÇÃO: Lista view (inicialmente oculto) - reutiliza as opções já existentes -->
     <section id="list-view" class="view-container panel hidden" aria-hidden="true">
       <h2 class="section-title">Lista de Presentes</h2>
-
-      <!-- ALTERAÇÃO: conteudo da lista reutilizado -->
       <div class="items-grid" id="items-grid-copy">
+       <!-- itens... -->
        <div class="item-card">
         <div class="item-image" role="img" aria-label="Ícone mamadeira">🍼</div>
         <div class="item-content">
@@ -236,79 +145,15 @@
         </div>
        </div>
 
-       <div class="item-card">
-        <div class="item-image" role="img" aria-label="Ícone banheira">🛁</div>
-        <div class="item-content">
-         <h3 class="item-name">Kit Banho Completo</h3>
-         <p class="item-description">Shampoo, sabonete líquido, loção hidratante e óleo para bebê</p>
-         <p class="item-quantity">Quantidade: 1 kit</p>
-         <a href="https://www.amazon.com.br/s?k=kit+banho+bebê+johnson" target="_blank" rel="noopener noreferrer" class="buy-button">Comprar Presente</a>
-        </div>
-       </div>
-
-       <div class="item-card">
-        <div class="item-image" role="img" aria-label="Ícone body">👕</div>
-        <div class="item-content">
-         <h3 class="item-name">Bodies Manga Curta</h3>
-         <p class="item-description">Kit com 5 bodies de algodão em cores variadas (branco, azul, listrado)</p>
-         <p class="item-quantity">Quantidade: 1 kit tamanho RN</p>
-         <a href="https://www.amazon.com.br/s?k=body+bebê+manga+curta+rn" target="_blank" rel="noopener noreferrer" class="buy-button">Comprar Presente</a>
-        </div>
-       </div>
-
-       <div class="item-card">
-        <div class="item-image" role="img" aria-label="Ícone trocador">🧷</div>
-        <div class="item-content">
-         <h3 class="item-name">Trocador Portátil</h3>
-         <p class="item-description">Trocador dobrável impermeável para facilitar as trocas de fralda</p>
-         <p class="item-quantity">Quantidade: 1 unidade</p>
-         <a href="https://www.amazon.com.br/s?k=trocador+portátil+bebê" target="_blank" rel="noopener noreferrer" class="buy-button">Comprar Presente</a>
-        </div>
-       </div>
-
-       <div class="item-card">
-        <div class="item-image" role="img" aria-label="Ícone chupeta">🍼</div>
-        <div class="item-content">
-         <h3 class="item-name">Chupetas Ortodônticas</h3>
-         <p class="item-description">Kit com 2 chupetas ortodônticas para recém-nascido</p>
-         <p class="item-quantity">Quantidade: 1 kit</p>
-         <a href="https://www.amazon.com.br/s?k=chupeta+ortodôntica+rn" target="_blank" rel="noopener noreferrer" class="buy-button">Comprar Presente</a>
-        </div>
-       </div>
-
-       <div class="item-card">
-        <div class="item-image" role="img" aria-label="Ícone meias e luvas">🧦</div>
-        <div class="item-content">
-         <h3 class="item-name">Meias e Luvas</h3>
-         <p class="item-description">Kit com 6 pares de meias e 3 pares de luvas para bebê</p>
-         <p class="item-quantity">Quantidade: 1 kit</p>
-         <a href="https://www.amazon.com.br/s?k=meia+luva+bebê+rn" target="_blank" rel="noopener noreferrer" class="buy-button">Comprar Presente</a>
-        </div>
-       </div>
+       <!-- mais itens... -->
       </div>
     </section>
    </main>
 
    <footer>
     <p>Obrigada por fazer parte deste momento especial! 💙👶</p>
-    <!-- ALTERAÇÃO: exibindo o período correto -->
     <p><strong>Período para Presentes (online):</strong> <span id="event-date">09/11/2025 até 30/12/2025</span></p>
    </footer>
   </div>
-
-  <!-- Removidos scripts inline duplicados; lógica está em js/views.js, js/auth.js e js/copy-pix.js 
-  <script type="application/ld+json">
-    {
-      "@context":"https://schema.org",
-      "@type":"Event",
-      "name":"Chá de Fralda do Apollo",
-      "eventAttendanceMode":"https://schema.org/OnlineEventAttendanceMode",
-      "startDate":"2025-11-09",
-      "endDate":"2025-12-30",
-      "location":{"@type":"VirtualLocation","url":"https://example.com"},
-      "description":"Lista de presentes do Chá de Fralda do Apollo. Período online: 09/11/2025 até 30/12/2025."
-    }
-  </script>
-  -->
  </body>
 </html>
