@@ -1,0 +1,315 @@
+<!doctype html>
+<html lang="pt-BR">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Lista de presentes do Chá de Fralda do Apollo — escolha um presente especial para o nosso pequeno.">
+  <title>Chá de Fralda</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <script src="js/countdown.js" defer></script>
+  <script src="js/views.js" defer></script>
+
+  <!-- ALTERAÇÃO: adicionado estilo inline (contador, layout flex para footer ficar no final, botões de escolha, centralização do parágrafo da home) -->
+  <style>
+    /* ALTERAÇÃO: layout base para manter o footer no final sem sobreposição */
+    html, body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      min-height: 100vh; /* ALTERAÇÃO: garante que o container ocupe toda a altura */
+      display: flex;
+      flex-direction: column;
+    }
+
+    main {
+      flex: 1 0 auto; /* ALTERAÇÃO: empurra o footer para o final quando conteúdo é curto */
+    }
+
+    footer {
+      flex-shrink: 0;
+      text-align: center;
+      padding: 18px 20px;
+      color: #666;
+      font-size: 16px;
+      background: rgba(255,255,255,0.96);
+      border-top: 1px solid rgba(0,0,0,0.04);
+    }
+
+    /* ALTERAÇÃO: estilo do contador que acompanha a página */
+    .countdown-timer{
+      position: fixed;
+      top: 18px;
+      right: 18px;
+      background: rgba(255,255,255,0.96);
+      color: #1f4e8a;
+      padding: 10px 14px;
+      border-radius: 12px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.12);
+      font-weight: 700;
+      z-index: 9999;
+      display: inline-block;
+      line-height: 1;
+      min-width: 180px;
+      text-align: center;
+      font-family: inherit;
+    }
+    @media (max-width:480px){
+      .countdown-timer{ top: 10px; right: 10px; font-size:13px; padding:8px 10px; min-width: 140px; }
+    }
+
+    /* ALTERAÇÃO: containers para mudar de "views" sem recarregar a página */
+    .view-container { display: block; transition: opacity .25s ease; }
+    .hidden { display: none !important; }
+
+    /* ALTERAÇÃO: botões de escolha (PIX / Lista) e estado ativo */
+    .choice-buttons { display:flex; gap:12px; justify-content:center; margin: 18px 0 6px 0; flex-wrap:wrap;}
+    .choice-button {
+      background: linear-gradient(135deg,#e6f3ff,#d9ecff);
+      color:#214a77;
+      border-radius:12px;
+      padding:10px 18px;
+      text-decoration:none;
+      font-weight:700;
+      cursor:pointer;
+      border:1px solid transparent;
+      transition: all .16s ease;
+    }
+    .choice-button:hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(74,144,226,0.08); }
+
+    /* ALTERAÇÃO: estado ativo (azul) */
+    .choice-button.active {
+      background: linear-gradient(135deg,#4a90e2,#357abd);
+      color:white;
+      border-color: rgba(0,0,0,0.06);
+    }
+
+    /* ALTERAÇÃO: container interno para conteúdo dinâmico */
+    .panel {
+      background: rgba(255,255,255,0.98);
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.06);
+      margin: 18px 0;
+    }
+
+    /* pequenos ajustes para grid dos items quando exibidos */
+    .items-grid { display:grid; grid-template-columns: repeat(auto-fill,minmax(300px,1fr)); gap:18px; margin-top:12px; }
+
+    .item-card { background:white; border-radius:12px; padding:12px; box-shadow:0 6px 18px rgba(0,0,0,0.04); }
+    .item-image { font-size:48px; text-align:center; padding:14px; }
+    .item-content { padding:8px 6px; }
+
+    /* ALTERAÇÃO: centralizar parágrafo da home view */
+    #home-view p { text-align: center; margin: 0 auto; }
+
+    .back-button { display:none; } /* mantido para compatibilidade, não usado */
+  </style>
+ </head>
+ <body>
+  <div class="container">
+   <header style="padding:24px 20px; text-align:center;">
+    <h1>Chá de Fralda do Apollo</h1>
+    <p class="welcome-text">Bem-vindos ao nosso chá de bebê online! Escolha um presente especial para o nosso novo astro!</p>
+
+    <!-- ALTERAÇÃO: elemento do contador adicionado (aria-live para acessibilidade) -->
+    <div id="countdown-timer" class="countdown-timer" aria-live="polite">Carregando contador...</div>
+
+    <!-- ALTERAÇÃO: botões de escolha dinâmicos (PIX / Lista de Presentes) exibidos abaixo da saudação -->
+    <div class="choice-buttons" aria-hidden="false" style="margin-top:16px;">
+      <button id="btn-pix" class="choice-button" type="button" aria-pressed="false">Fazer PIX</button>
+      <button id="btn-list" class="choice-button" type="button" aria-pressed="false">Ver Lista de Presentes</button>
+    </div>
+   </header>
+
+   <main style="width:100%;max-width:1200px;margin:0 auto;padding:16px;">
+    <!-- ALTERAÇÃO: Home view (exibida por padrão) -->
+    <section id="home-view" class="view-container panel">
+      <h2 class="section-title">Toda ajuda é bem vinda!</h2>
+      <br>
+      <p>Escolha "<b>Ver Lista de Presentes</b>" para abrir as opções disponíveis de presentes para o Apollo ou "<b>Faça um PIX</b>" para nos ajudar com as futuras fraldas!</p>
+    </section>
+
+    <!-- ALTERAÇÃO: PIX view (inicialmente oculto) -->
+    <section id="pix-view" class="view-container panel hidden" aria-hidden="true">
+      <h2>Fazer PIX</h2>
+      <p>Abaixo estão os dados para realizar o PIX. Copie ou use o QR code.</p>
+
+      <!-- Exemplo de dados PIX (substitua pelos reais) -->
+      <div id="pix-data" style="margin-top:10px;">
+        <p><strong>Chave PIX:</strong> 000.000.000-00</p>
+        <p><strong>Nome:</strong> Nome do Recebedor</p>
+        <p><strong>Valor sugerido:</strong> Livre</p>
+        <!-- ALTERAÇÃO: espaço para QR code (opcional) -->
+        <div style="margin-top:12px;">
+          <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><rect width='100%' height='100%' fill='%23f3f6fb'/><text x='50%' y='50%' dominant-baseline='middle' text-anchor='middle' font-size='12' fill='%23777'>QR code aqui</text></svg>" alt="QR code PIX (exemplo)" style="border-radius:8px;">
+        </div>
+      </div>
+    </section>
+
+    <!-- ALTERAÇÃO: Lista view (inicialmente oculto) - reutiliza as opções já existentes -->
+    <section id="list-view" class="view-container panel hidden" aria-hidden="true">
+      <h2 class="section-title">Lista de Presentes</h2>
+
+      <!-- ALTERAÇÃO: conteudo da lista reutilizado -->
+      <div class="items-grid" id="items-grid-copy">
+       <div class="item-card">
+        <div class="item-image" role="img" aria-label="Ícone mamadeira">🍼</div>
+        <div class="item-content">
+         <h3 class="item-name">Mamadeiras Anticólica</h3>
+         <p class="item-description">Kit com 3 mamadeiras anticólica de diferentes tamanhos (150ml, 240ml, 330ml)</p>
+         <p class="item-quantity">Quantidade: 1 kit</p>
+         <a href="https://www.amazon.com.br/s?k=mamadeira+anticólica" target="_blank" rel="noopener noreferrer" class="buy-button">Comprar Presente</a>
+        </div>
+       </div>
+
+       <div class="item-card">
+        <div class="item-image" role="img" aria-label="Ícone bebê">👶</div>
+        <div class="item-content">
+         <h3 class="item-name">Fraldas Tamanho RN/P</h3>
+         <p class="item-description">Pacotes de fraldas descartáveis tamanho RN e P, macias e com alta absorção</p>
+         <p class="item-quantity">Quantidade: 3 pacotes</p>
+         <a href="https://www.amazon.com.br/s?k=fraldas+pampers+rn" target="_blank" rel="noopener noreferrer" class="buy-button">Comprar Presente</a>
+        </div>
+       </div>
+
+       <div class="item-card">
+        <div class="item-image" role="img" aria-label="Ícone ursinho de pelúcia">🧸</div>
+        <div class="item-content">
+         <h3 class="item-name">Ursinho de Pelúcia Azul</h3>
+         <p class="item-description">Ursinho macio e fofo em tons de azul para acompanhar o bebê</p>
+         <p class="item-quantity">Quantidade: 1 unidade</p>
+         <a href="https://www.amazon.com.br/s?k=ursinho+pelúcia+azul+bebê" target="_blank" rel="noopener noreferrer" class="buy-button">Comprar Presente</a>
+        </div>
+       </div>
+
+       <div class="item-card">
+        <div class="item-image" role="img" aria-label="Ícone banheira">🛁</div>
+        <div class="item-content">
+         <h3 class="item-name">Kit Banho Completo</h3>
+         <p class="item-description">Shampoo, sabonete líquido, loção hidratante e óleo para bebê</p>
+         <p class="item-quantity">Quantidade: 1 kit</p>
+         <a href="https://www.amazon.com.br/s?k=kit+banho+bebê+johnson" target="_blank" rel="noopener noreferrer" class="buy-button">Comprar Presente</a>
+        </div>
+       </div>
+
+       <div class="item-card">
+        <div class="item-image" role="img" aria-label="Ícone body">👕</div>
+        <div class="item-content">
+         <h3 class="item-name">Bodies Manga Curta</h3>
+         <p class="item-description">Kit com 5 bodies de algodão em cores variadas (branco, azul, listrado)</p>
+         <p class="item-quantity">Quantidade: 1 kit tamanho RN</p>
+         <a href="https://www.amazon.com.br/s?k=body+bebê+manga+curta+rn" target="_blank" rel="noopener noreferrer" class="buy-button">Comprar Presente</a>
+        </div>
+       </div>
+
+       <div class="item-card">
+        <div class="item-image" role="img" aria-label="Ícone trocador">🧷</div>
+        <div class="item-content">
+         <h3 class="item-name">Trocador Portátil</h3>
+         <p class="item-description">Trocador dobrável impermeável para facilitar as trocas de fralda</p>
+         <p class="item-quantity">Quantidade: 1 unidade</p>
+         <a href="https://www.amazon.com.br/s?k=trocador+portátil+bebê" target="_blank" rel="noopener noreferrer" class="buy-button">Comprar Presente</a>
+        </div>
+       </div>
+
+       <div class="item-card">
+        <div class="item-image" role="img" aria-label="Ícone chupeta">🍼</div>
+        <div class="item-content">
+         <h3 class="item-name">Chupetas Ortodônticas</h3>
+         <p class="item-description">Kit com 2 chupetas ortodônticas para recém-nascido</p>
+         <p class="item-quantity">Quantidade: 1 kit</p>
+         <a href="https://www.amazon.com.br/s?k=chupeta+ortodôntica+rn" target="_blank" rel="noopener noreferrer" class="buy-button">Comprar Presente</a>
+        </div>
+       </div>
+
+       <div class="item-card">
+        <div class="item-image" role="img" aria-label="Ícone meias e luvas">🧦</div>
+        <div class="item-content">
+         <h3 class="item-name">Meias e Luvas</h3>
+         <p class="item-description">Kit com 6 pares de meias e 3 pares de luvas para bebê</p>
+         <p class="item-quantity">Quantidade: 1 kit</p>
+         <a href="https://www.amazon.com.br/s?k=meia+luva+bebê+rn" target="_blank" rel="noopener noreferrer" class="buy-button">Comprar Presente</a>
+        </div>
+       </div>
+      </div>
+    </section>
+   </main>
+
+   <footer>
+    <p>Obrigada por fazer parte deste momento especial! 💙👶</p>
+    <!-- ALTERAÇÃO: exibindo o período correto -->
+    <p><strong>Período para Presentes (online):</strong> <span id="event-date">09/11/2025 até 30/12/2025</span></p>
+   </footer>
+  </div>
+
+  <!-- ALTERAÇÃO: script para alternar views sem recarregar a página e marcar botão selecionado (sem botão voltar) 
+  <script>
+    (function(){
+      // elementos
+      var btnPix = document.getElementById('btn-pix');
+      var btnList = document.getElementById('btn-list');
+      var home = document.getElementById('home-view');
+      var pix = document.getElementById('pix-view');
+      var list = document.getElementById('list-view');
+
+      // função que atualiza views e estados dos botões
+      function select(option){
+        if(option === 'pix'){
+          pix.classList.remove('hidden'); pix.setAttribute('aria-hidden','false');
+          list.classList.add('hidden'); list.setAttribute('aria-hidden','true');
+          home.classList.add('hidden'); home.setAttribute('aria-hidden','true');
+          if(btnPix) { btnPix.classList.add('active'); btnPix.setAttribute('aria-pressed','true'); }
+          if(btnList) { btnList.classList.remove('active'); btnList.setAttribute('aria-pressed','false'); }
+        } else if(option === 'list'){
+          list.classList.remove('hidden'); list.setAttribute('aria-hidden','false');
+          pix.classList.add('hidden'); pix.setAttribute('aria-hidden','true');
+          home.classList.add('hidden'); home.setAttribute('aria-hidden','true');
+          if(btnList) { btnList.classList.add('active'); btnList.setAttribute('aria-pressed','true'); }
+          if(btnPix) { btnPix.classList.remove('active'); btnPix.setAttribute('aria-pressed','false'); }
+        } else {
+          // home
+          home.classList.remove('hidden'); home.setAttribute('aria-hidden','false');
+          pix.classList.add('hidden'); pix.setAttribute('aria-hidden','true');
+          list.classList.add('hidden'); list.setAttribute('aria-hidden','true');
+          if(btnPix) { btnPix.classList.remove('active'); btnPix.setAttribute('aria-pressed','false'); }
+          if(btnList) { btnList.classList.remove('active'); btnList.setAttribute('aria-pressed','false'); }
+        }
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+
+      // eventos
+      if(btnPix) btnPix.addEventListener('click', function(){ select('pix'); });
+      if(btnList) btnList.addEventListener('click', function(){ select('list'); });
+
+      // keyboard support
+      [btnPix, btnList].forEach(function(btn){
+        if(!btn) return;
+        btn.addEventListener('keydown', function(e){
+          if(e.key === 'Enter' || e.key === ' ') { e.preventDefault(); btn.click(); }
+        });
+      });
+
+      // mantém estado inicial (home)
+      select('home');
+    })();
+  </script>-->
+
+  <!-- ALTERAÇÃO: JSON-LD (corrigido e com intervalo correto) 
+  <script type="application/ld+json">
+    {
+      "@context":"https://schema.org",
+      "@type":"Event",
+      "name":"Chá de Fralda do Apollo",
+      "eventAttendanceMode":"https://schema.org/OnlineEventAttendanceMode",
+      "startDate":"2025-11-09",
+      "endDate":"2025-12-30",
+      "location":{"@type":"VirtualLocation","url":"https://example.com"},
+      "description":"Lista de presentes do Chá de Fralda do Apollo. Período online: 09/11/2025 até 30/12/2025."
+    }
+  </script>
+  -->
+ </body>
+</html>

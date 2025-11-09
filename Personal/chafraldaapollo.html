@@ -1,0 +1,301 @@
+<!doctype html>
+<html lang="pt-BR">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chá de Fralda</title>
+  <style>
+    body {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Georgia', serif;
+      min-height: 100vh;
+      background: linear-gradient(135deg, #e6f3ff 0%, #f0f8ff 100%);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 40px 20px;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 50px;
+      background: rgba(255, 255, 255, 0.95);
+      padding: 40px 30px;
+      border-radius: 20px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+      font-size: 48px;
+      color: #4a90e2;
+      margin: 0 0 15px 0;
+      font-weight: 700;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.05);
+    }
+
+    .welcome-text {
+      font-size: 20px;
+      color: #666;
+      margin: 0;
+      font-style: italic;
+    }
+
+    .section-title {
+      text-align: center;
+      font-size: 32px;
+      color: #4a90e2;
+      margin: 0 0 40px 0;
+      font-weight: 600;
+    }
+
+    .items-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 30px;
+      margin-bottom: 40px;
+    }
+
+    .item-card {
+      background: white;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .item-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 30px rgba(74, 144, 226, 0.2);
+    }
+
+    .item-image {
+      width: 100%;
+      height: 240px;
+      object-fit: cover;
+      background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 80px;
+      border-bottom: 1px solid #eee;
+    }
+
+    .item-content {
+      padding: 24px;
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .item-name {
+      font-size: 22px;
+      color: #333;
+      margin: 0 0 12px 0;
+      font-weight: 600;
+    }
+
+    .item-description {
+      font-size: 15px;
+      color: #666;
+      margin: 0 0 8px 0;
+      line-height: 1.5;
+    }
+
+    .item-quantity {
+      font-size: 14px;
+      color: #999;
+      margin: 0 0 20px 0;
+      font-style: italic;
+    }
+
+    .buy-button {
+      background: linear-gradient(135deg, #4a90e2 0%, #357abd 100%);
+      color: white;
+      border: none;
+      padding: 14px 28px;
+      border-radius: 25px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      display: inline-block;
+      text-align: center;
+      margin-top: auto;
+    }
+
+    .buy-button:hover {
+      background: linear-gradient(135deg, #357abd 0%, #2c5aa0 100%);
+      transform: scale(1.05);
+      box-shadow: 0 4px 15px rgba(74, 144, 226, 0.4);
+    }
+
+    footer {
+      text-align: center;
+      padding: 30px 20px;
+      color: #666;
+      font-size: 16px;
+      background: rgba(255, 255, 255, 0.8);
+      border-radius: 12px;
+      margin-top: 40px;
+    }
+
+    /* Responsividade */
+    @media (max-width: 768px) {
+      .container {
+        padding: 20px 15px;
+      }
+
+      h1 {
+        font-size: 36px;
+      }
+
+      .welcome-text {
+        font-size: 18px;
+      }
+
+      .section-title {
+        font-size: 26px;
+      }
+
+      .items-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+      }
+
+      header {
+        padding: 30px 20px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      h1 {
+        font-size: 28px;
+      }
+
+      .welcome-text {
+        font-size: 16px;
+      }
+
+      .section-title {
+        font-size: 22px;
+      }
+
+      .item-content {
+        padding: 20px;
+      }
+    }
+  </style>
+  <style>@view-transition { navigation: auto; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+  <script src="/_sdk/element_sdk.js" type="text/javascript"></script>
+  <script src="https://cdn.tailwindcss.com" type="text/javascript"></script>
+ </head>
+ <body>
+  <div class="container">
+   <header>
+    <h1>Chá de Fralda do Apollo</h1>
+    <p class="welcome-text">Bem-vindos ao nosso chá de bebê Online! Escolha um presente especial para o nosso pequeno príncipe.</p>
+   </header>
+   <main>
+    <h2 class="section-title">Lista de Presentes</h2>
+    <div class="items-grid"><!-- Item 1 -->
+     <div class="item-card">
+      <div class="item-image">
+       🍼
+      </div>
+      <div class="item-content">
+       <h3 class="item-name">Mamadeiras Anticólica</h3>
+       <p class="item-description">Kit com 3 mamadeiras anticólica de diferentes tamanhos (150ml, 240ml, 330ml)</p>
+       <p class="item-quantity">Quantidade: 1 kit</p><a href="https://www.amazon.com.br/s?k=mamadeira+anticólica" target="_blank" rel="noopener noreferrer" class="buy-button">Comprar Presente</a>
+      </div>
+     </div><!-- Item 2 -->
+     <div class="item-card">
+      <div class="item-image">
+       👶
+      </div>
+      <div class="item-content">
+       <h3 class="item-name">Fraldas Tamanho RN/P</h3>
+       <p class="item-description">Pacotes de fraldas descartáveis tamanho RN e P, macias e com alta absorção</p>
+       <p class="item-quantity">Quantidade: 3 pacotes</p><a href="https://www.amazon.com.br/s?k=fraldas+pampers+rn" target="_blank" rel="noopener noreferrer" class="buy-button">Comprar Presente</a>
+      </div>
+     </div><!-- Item 3 -->
+     <div class="item-card">
+      <div class="item-image">
+       🧸
+      </div>
+      <div class="item-content">
+       <h3 class="item-name">Ursinho de Pelúcia Azul</h3>
+       <p class="item-description">Ursinho macio e fofo em tons de azul para acompanhar o bebê</p>
+       <p class="item-quantity">Quantidade: 1 unidade</p><a href="https://www.amazon.com.br/s?k=ursinho+pelúcia+azul+bebê" target="_blank" rel="noopener noreferrer" class="buy-button">Comprar Presente</a>
+      </div>
+     </div><!-- Item 4 -->
+     <div class="item-card">
+      <div class="item-image">
+       🛁
+      </div>
+      <div class="item-content">
+       <h3 class="item-name">Kit Banho Completo</h3>
+       <p class="item-description">Shampoo, sabonete líquido, loção hidratante e óleo para bebê</p>
+       <p class="item-quantity">Quantidade: 1 kit</p><a href="https://www.amazon.com.br/s?k=kit+banho+bebê+johnson" target="_blank" rel="noopener noreferrer" class="buy-button">Comprar Presente</a>
+      </div>
+     </div><!-- Item 5 -->
+     <div class="item-card">
+      <div class="item-image">
+       👕
+      </div>
+      <div class="item-content">
+       <h3 class="item-name">Bodies Manga Curta</h3>
+       <p class="item-description">Kit com 5 bodies de algodão em cores variadas (branco, azul, listrado)</p>
+       <p class="item-quantity">Quantidade: 1 kit tamanho RN</p><a href="https://www.amazon.com.br/s?k=body+bebê+manga+curta+rn" target="_blank" rel="noopener noreferrer" class="buy-button">Comprar Presente</a>
+      </div>
+     </div><!-- Item 6 -->
+     <div class="item-card">
+      <div class="item-image">
+       🧷
+      </div>
+      <div class="item-content">
+       <h3 class="item-name">Trocador Portátil</h3>
+       <p class="item-description">Trocador dobrável impermeável para facilitar as trocas de fralda</p>
+       <p class="item-quantity">Quantidade: 1 unidade</p><a href="https://www.amazon.com.br/s?k=trocador+portátil+bebê" target="_blank" rel="noopener noreferrer" class="buy-button">Comprar Presente</a>
+      </div>
+     </div><!-- Item 7 -->
+     <div class="item-card">
+      <div class="item-image">
+       🍼
+      </div>
+      <div class="item-content">
+       <h3 class="item-name">Chupetas Ortodônticas</h3>
+       <p class="item-description">Kit com 2 chupetas ortodônticas para recém-nascido</p>
+       <p class="item-quantity">Quantidade: 1 kit</p><a href="https://www.amazon.com.br/s?k=chupeta+ortodôntica+rn" target="_blank" rel="noopener noreferrer" class="buy-button">Comprar Presente</a>
+      </div>
+     </div><!-- Item 8 -->
+     <div class="item-card">
+      <div class="item-image">
+       🧦
+      </div>
+      <div class="item-content">
+       <h3 class="item-name">Meias e Luvas</h3>
+       <p class="item-description">Kit com 6 pares de meias e 3 pares de luvas para bebê</p>
+       <p class="item-quantity">Quantidade: 1 kit</p><a href="https://www.amazon.com.br/s?k=meia+luva+bebê+rn" target="_blank" rel="noopener noreferrer" class="buy-button">Comprar Presente</a>
+      </div>
+     </div>
+    </div>
+   </main>
+   <footer>
+    <p>Obrigada por fazer parte deste momento especial! 💙👶</p>
+    <p><strong>Data do Chá:</strong> [Insira a data aqui] | <strong>Local:</strong> [Insira o endereço aqui]</p>
+   </footer>
+  </div>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'99be63b070749ca2',t:'MTc2MjcwMjYyNS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
