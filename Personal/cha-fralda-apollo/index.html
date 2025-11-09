@@ -8,6 +8,7 @@
   <link rel="stylesheet" href="css/styles.css">
   <script src="js/countdown.js" defer></script>
   <script src="js/views.js" defer></script>
+  <script src="js/auth.js" defer></script>
 
   <!-- ALTERAÇÃO: adicionado estilo inline (contador, layout flex para footer ficar no final, botões de escolha, centralização do parágrafo da home) -->
   <style>
@@ -109,6 +110,30 @@
   </style>
  </head>
  <body>
+  <!-- ALTERAÇÃO: overlay de verificação humana (bloqueia acesso até validar) -->
+  <div id="auth-overlay" aria-hidden="false" role="dialog" aria-label="Verificação humana" style="position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,0.6);z-index:100000;">
+    <div style="background:#fff;border-radius:12px;padding:20px;max-width:420px;width:92%;text-align:center;box-shadow:0 10px 40px rgba(0,0,0,0.4);">
+      <h3 style="margin:0 0 8px;">Verificação</h3>
+      <p style="margin:0 0 12px;color:#333">Digite o código que aparece na imagem para continuar.</p>
+
+      <!-- canvas com o código -->
+      <div style="display:flex;gap:8px;align-items:center;justify-content:center;margin-bottom:10px;">
+        <canvas id="captcha-canvas" width="160" height="56" style="border-radius:8px;background:#f6f9ff;border:1px solid #e6eefc"></canvas>
+        <button id="captcha-refresh" type="button" style="background:#eef6ff;border:1px solid #d6eaff;padding:6px 8px;border-radius:8px;cursor:pointer">↻</button>
+      </div>
+
+      <input id="captcha-input" aria-label="Código de verificação" type="text" inputmode="numeric" autocomplete="off" maxlength="6" style="width:100%;padding:10px;border-radius:8px;border:1px solid #d9eaff;margin-bottom:10px;font-size:16px;text-align:center" placeholder="Digite o código">
+
+      <div style="display:flex;gap:8px;justify-content:center;">
+        <button id="captcha-verify" type="button" style="background:#4a90e2;color:#fff;padding:10px 16px;border-radius:10px;border:none;cursor:pointer;font-weight:700">Verificar</button>
+        <button id="captcha-cancel" type="button" style="background:#f3f5f8;color:#333;padding:10px 12px;border-radius:10px;border:1px solid #e6eefc;cursor:pointer">Cancelar</button>
+      </div>
+
+      <p id="captcha-msg" style="color:#c33;margin-top:10px;min-height:18px"></p>
+      <small style="display:block;margin-top:10px;color:#666">Esta verificação é sessão-local — para maior segurança use reCAPTCHA/server-side.</small>
+    </div>
+  </div>
+
   <div class="container">
    <header style="padding:24px 20px; text-align:center;">
     <h1>Chá de Fralda do Apollo</h1>
