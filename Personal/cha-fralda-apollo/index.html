@@ -9,6 +9,7 @@
   <script src="js/countdown.js" defer></script>
   <script src="js/views.js" defer></script>
   <script src="js/auth.js" defer></script>
+  <script src="js/copy-pix.js" defer></script>
 
   <!-- ALTERAÇÃO: adicionado estilo inline (contador, layout flex para footer ficar no final, botões de escolha, centralização do parágrafo da home) -->
   <style>
@@ -107,22 +108,31 @@
     #home-view p { text-align: center; margin: 0 auto; }
 
     .back-button { display:none; } /* mantido para compatibilidade, não usado */
+
+    /* pequena responsividade do painel PIX */
+    #pix-data img { max-width:160px; height:auto; display:block; margin:0 auto; }
   </style>
  </head>
  <body>
-  <!-- ALTERAÇÃO: overlay de verificação humana (bloqueia acesso até validar) 
+  <!-- ALTERAÇÃO: overlay de verificação humana (bloqueia acesso até validar) -->
   <div id="auth-overlay" aria-hidden="false" role="dialog" aria-label="Verificação humana" style="position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,0.6);z-index:100000;">
     <div style="background:#fff;border-radius:12px;padding:20px;max-width:420px;width:92%;text-align:center;box-shadow:0 10px 40px rgba(0,0,0,0.4);">
       <h3 style="margin:0 0 8px;">Verificação</h3>
       <p style="margin:0 0 12px;color:#333">Digite o código que aparece na imagem para continuar.</p>
 
-      canvas com o código
+      <!-- canvas com o código -->
       <div style="display:flex;gap:8px;align-items:center;justify-content:center;margin-bottom:10px;">
         <canvas id="captcha-canvas" width="160" height="56" style="border-radius:8px;background:#f6f9ff;border:1px solid #e6eefc"></canvas>
         <button id="captcha-refresh" type="button" style="background:#eef6ff;border:1px solid #d6eaff;padding:6px 8px;border-radius:8px;cursor:pointer">↻</button>
       </div>
 
-      <input id="captcha-input" aria-label="Código de verificação" type="text" inputmode="text" autocomplete="off" maxlength="6" style="width:100%;padding:10px;border-radius:8px;border:1px solid #d9eaff;margin-bottom:10px;font-size:16px;text-align:center" placeholder="Digite o código">
+      <!-- ALTERAÇÃO: input ajustado para permitir teclado alfanumérico no mobile e sem autocapitalize/autocorrect -->
+      <input id="captcha-input" aria-label="Código de verificação" type="text"
+             inputmode="text" pattern="[A-Za-z0-9]*"
+             autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false"
+             maxlength="6"
+             style="width:100%;padding:10px;border-radius:8px;border:1px solid #d9eaff;margin-bottom:10px;font-size:16px;text-align:center"
+             placeholder="Digite o código">
 
       <div style="display:flex;gap:8px;justify-content:center;">
         <button id="captcha-verify" type="button" style="background:#4a90e2;color:#fff;padding:10px 16px;border-radius:10px;border:none;cursor:pointer;font-weight:700">Verificar</button>
@@ -133,7 +143,6 @@
       <small style="display:block;margin-top:10px;color:#666">Esta verificação é sessão-local — para maior segurança use reCAPTCHA/server-side.</small>
     </div>
   </div>
-  -->
 
   <div class="container">
    <header style="padding:24px 20px; text-align:center;">
@@ -161,13 +170,14 @@
     <!-- ALTERAÇÃO: PIX view (inicialmente oculto) -->
     <section id="pix-view" class="view-container panel hidden" aria-hidden="true">
       <h2>Fazer PIX</h2>
-      <p>Abaixo estão os dados para realizar o PIX. Copie ou use o QR Code dentro do aplicativo do seu banco.</p>
+      <p>Abaixo estão os dados para realizar o PIX. Clique no botão ou use o QR Code dentro do aplicativo do seu banco.</p>
 
       <!-- Exemplo de dados PIX (substitua pelos reais) -->
       <div id="pix-data" style="margin-top:10px;">
         <p><strong>Chave PIX:</strong> 857ed555-b4b6-4606-a688-931e35a388df</p>
         <p><strong>Nome:</strong> Matheus Alexander Sol</p>
         <p><strong>Valor sugerido:</strong> Livre</p>
+
         <!-- ALTERAÇÃO: espaço para QR code (opcional) -->
         <div style="margin-top:12px;">
           <!-- ALTERAÇÃO: QR Code gerado via API pública com o payload PIX fornecido -->
@@ -178,6 +188,12 @@
               alt="QR code PIX (escaneie para pagar)"
               style="border-radius:8px; display:block; margin:0 auto;">
           </a>
+
+          <!-- ALTERAÇÃO: botão para copiar a chave PIX (857ed555-...) com mensagem de confirmação -->
+          <div style="text-align:center;margin-top:10px;">
+            <button id="copy-pix" class="choice-button" type="button" aria-label="Copiar Chave PIX">Copiar Chave PIX</button>
+            <span id="copy-pix-msg" style="display:inline-block;margin-left:10px;color:#2a7d32;opacity:0;transition:opacity .2s;font-weight:600;"></span>
+          </div>
         </div>
       </div>
     </section>
@@ -278,59 +294,7 @@
    </footer>
   </div>
 
-  <!-- ALTERAÇÃO: script para alternar views sem recarregar a página e marcar botão selecionado (sem botão voltar) 
-  <script>
-    (function(){
-      // elementos
-      var btnPix = document.getElementById('btn-pix');
-      var btnList = document.getElementById('btn-list');
-      var home = document.getElementById('home-view');
-      var pix = document.getElementById('pix-view');
-      var list = document.getElementById('list-view');
-
-      // função que atualiza views e estados dos botões
-      function select(option){
-        if(option === 'pix'){
-          pix.classList.remove('hidden'); pix.setAttribute('aria-hidden','false');
-          list.classList.add('hidden'); list.setAttribute('aria-hidden','true');
-          home.classList.add('hidden'); home.setAttribute('aria-hidden','true');
-          if(btnPix) { btnPix.classList.add('active'); btnPix.setAttribute('aria-pressed','true'); }
-          if(btnList) { btnList.classList.remove('active'); btnList.setAttribute('aria-pressed','false'); }
-        } else if(option === 'list'){
-          list.classList.remove('hidden'); list.setAttribute('aria-hidden','false');
-          pix.classList.add('hidden'); pix.setAttribute('aria-hidden','true');
-          home.classList.add('hidden'); home.setAttribute('aria-hidden','true');
-          if(btnList) { btnList.classList.add('active'); btnList.setAttribute('aria-pressed','true'); }
-          if(btnPix) { btnPix.classList.remove('active'); btnPix.setAttribute('aria-pressed','false'); }
-        } else {
-          // home
-          home.classList.remove('hidden'); home.setAttribute('aria-hidden','false');
-          pix.classList.add('hidden'); pix.setAttribute('aria-hidden','true');
-          list.classList.add('hidden'); list.setAttribute('aria-hidden','true');
-          if(btnPix) { btnPix.classList.remove('active'); btnPix.setAttribute('aria-pressed','false'); }
-          if(btnList) { btnList.classList.remove('active'); btnList.setAttribute('aria-pressed','false'); }
-        }
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-      }
-
-      // eventos
-      if(btnPix) btnPix.addEventListener('click', function(){ select('pix'); });
-      if(btnList) btnList.addEventListener('click', function(){ select('list'); });
-
-      // keyboard support
-      [btnPix, btnList].forEach(function(btn){
-        if(!btn) return;
-        btn.addEventListener('keydown', function(e){
-          if(e.key === 'Enter' || e.key === ' ') { e.preventDefault(); btn.click(); }
-        });
-      });
-
-      // mantém estado inicial (home)
-      select('home');
-    })();
-  </script>-->
-
-  <!-- ALTERAÇÃO: JSON-LD (corrigido e com intervalo correto) 
+  <!-- Removidos scripts inline duplicados; lógica está em js/views.js, js/auth.js e js/copy-pix.js 
   <script type="application/ld+json">
     {
       "@context":"https://schema.org",
