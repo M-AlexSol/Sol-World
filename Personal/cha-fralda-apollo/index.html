@@ -114,19 +114,20 @@
   </style>
  </head>
  <body>
-  <!-- ALTERAÇÃO: overlay de verificação humana (bloqueia acesso até validar) -->
+  
+  <!-- ALTERAÇÃO: overlay de verificação humana (bloqueia acesso até validar) 
   <div id="auth-overlay" aria-hidden="false" role="dialog" aria-label="Verificação humana" style="position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,0.6);z-index:100000;">
     <div style="background:#fff;border-radius:12px;padding:20px;max-width:420px;width:92%;text-align:center;box-shadow:0 10px 40px rgba(0,0,0,0.4);">
       <h3 style="margin:0 0 8px;">Verificação</h3>
       <p style="margin:0 0 12px;color:#333">Digite o código que aparece na imagem para continuar.</p>
 
-      <!-- canvas com o código -->
+       canvas com o código 
       <div style="display:flex;gap:8px;align-items:center;justify-content:center;margin-bottom:10px;">
         <canvas id="captcha-canvas" width="160" height="56" style="border-radius:8px;background:#f6f9ff;border:1px solid #e6eefc"></canvas>
         <button id="captcha-refresh" type="button" style="background:#eef6ff;border:1px solid #d6eaff;padding:6px 8px;border-radius:8px;cursor:pointer">↻</button>
       </div>
 
-      <!-- ALTERAÇÃO: input ajustado para permitir teclado alfanumérico no mobile e sem autocapitalize/autocorrect -->
+       ALTERAÇÃO: input ajustado para permitir teclado alfanumérico no mobile e sem autocapitalize/autocorrect 
       <input id="captcha-input" aria-label="Código de verificação" type="text"
              inputmode="text" pattern="[A-Za-z0-9]*"
              autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false"
@@ -143,6 +144,7 @@
       <small style="display:block;margin-top:10px;color:#666">Esta verificação é sessão-local — para maior segurança use reCAPTCHA/server-side.</small>
     </div>
   </div>
+  -->
 
   <div class="container">
    <header style="padding:24px 20px; text-align:center;">
