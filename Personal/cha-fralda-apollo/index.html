@@ -161,16 +161,23 @@
     <!-- ALTERAÇÃO: PIX view (inicialmente oculto) -->
     <section id="pix-view" class="view-container panel hidden" aria-hidden="true">
       <h2>Fazer PIX</h2>
-      <p>Abaixo estão os dados para realizar o PIX. Copie ou use o QR code.</p>
+      <p>Abaixo estão os dados para realizar o PIX. Copie ou use o QR Code dentro do aplicativo do seu banco.</p>
 
       <!-- Exemplo de dados PIX (substitua pelos reais) -->
       <div id="pix-data" style="margin-top:10px;">
-        <p><strong>Chave PIX:</strong> 000.000.000-00</p>
-        <p><strong>Nome:</strong> Nome do Recebedor</p>
+        <p><strong>Chave PIX:</strong> 857ed555-b4b6-4606-a688-931e35a388df</p>
+        <p><strong>Nome:</strong> Matheus Alexander Sol</p>
         <p><strong>Valor sugerido:</strong> Livre</p>
         <!-- ALTERAÇÃO: espaço para QR code (opcional) -->
         <div style="margin-top:12px;">
-          <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><rect width='100%' height='100%' fill='%23f3f6fb'/><text x='50%' y='50%' dominant-baseline='middle' text-anchor='middle' font-size='12' fill='%23777'>QR code aqui</text></svg>" alt="QR code PIX (exemplo)" style="border-radius:8px;">
+          <!-- ALTERAÇÃO: QR Code gerado via API pública com o payload PIX fornecido -->
+          <!-- Payload (PIX): 00020126850014BR.GOV.BCB.PIX0136857ed555-b4b6-4606-a688-931e35a388df0223Chá de Fralda do Apollo5204000053039865802BR5921Matheus Alexander Sol6009SAO PAULO62140510QK24oXuaCo6304A982 -->
+          <a href="pix:00020126850014BR.GOV.BCB.PIX0136857ed555-b4b6-4606-a688-931e35a388df0223Ch%C3%A1%20de%20Fralda%20do%20Apollo5204000053039865802BR5921Matheus%20Alexander%20Sol6009SAO%20PAULO62140510QK24oXuaCo6304A982" target="_blank" rel="noopener noreferrer" title="Abrir PIX">
+            <img
+              src="https://api.qrserver.com/v1/create-qr-code/?size=160x160&data=00020126850014BR.GOV.BCB.PIX0136857ed555-b4b6-4606-a688-931e35a388df0223Ch%C3%A1%20de%20Fralda%20do%20Apollo5204000053039865802BR5921Matheus%20Alexander%20Sol6009SAO%20PAULO62140510QK24oXuaCo6304A982"
+              alt="QR code PIX (escaneie para pagar)"
+              style="border-radius:8px; display:block; margin:0 auto;">
+          </a>
         </div>
       </div>
     </section>
