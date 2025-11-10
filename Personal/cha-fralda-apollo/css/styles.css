@@ -1,440 +1,413 @@
-  :root {
-    --primary: #1d74d1;
-    --accent: #4a90e2;
-    --muted: #666;
-    --bg: #e3eeff;
-    --panel-bg: #ffffff;
-    --success: #2a7d32;
-    --danger: #c33;
-  }
+:root {
+  --primary: #1d74d1;
+  --accent: #4a90e2;
+  --muted: #666;
+  --bg: #e3eeff;
+  --panel-bg: #ffffff;
+  --success: #2a7d32;
+  --danger: #c33;
+}
 
-  html,
-  body {
-    height: 100%;
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
+html,
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
-  *,
-  *::before,
-  *::after {
-    box-sizing: inherit;
-  }
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+}
 
-  body {
-    font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
-    color: #222;
-    background: var(--bg);
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-  }
+body {
+  font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  color: #222;
+  background: var(--bg);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
 
-  .container {
-    min-height: 100vh;
-    /* ocupa a altura da tela */
-    display: flex;
-    flex-direction: column;
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 40px 15px;
-  }
+/* Container agora ocupa a altura da viewport para empurrar o footer ao fim */
+.container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 15px;
+}
 
-  /* HEADER: agora usa a imagem solarsistem.png como background decorativo,
-   com um leve overlay branco para manter legibilidade do texto */
-  header {
-    text-align: center;
-    margin-bottom: 50px;
-    padding: 64px 30px 40px;
-    border-radius: 20px;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+/* HEADER: usa um bloco com fundo leve; a imagem do sistema solar será um <img> entre h1 e p */
+header,
+header.site-header {
+  text-align: center;
+  margin-bottom: 40px;
+  padding: 48px 20px 28px;
+  border-radius: 20px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.10);
+  background-color: rgba(255, 254, 254, 0.92);
+}
 
-    /* primeiro o overlay branco semitransparente, depois a imagem.
-     Ajuste caminho: css/ -> ../images/solarsistem.png */
-    background-image:
-      linear-gradient(rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.88)),
-      url('../images/solarsistem.png');
-    background-repeat: no-repeat;
-    background-position: right 5px;
-    background-size: 190px auto;
-    background-color: rgba(255, 255, 255, 0.88);
-  }
+/* Título grande no header (mais específico para evitar overrides) */
+header.site-header h1,
+header h1 {
+  font-size: clamp(28px, 5vw, 64px);
+  color: var(--primary);
+  margin: 0 0 12px 0;
+  font-weight: 800;
+  line-height: 1.03;
+}
 
-  /* melhorar contraste do título sobre a imagem */
-  header h1 {
-    font-size: 64px !important;
-    color: #0064df;
-    margin: 0 0 15px 0;
-    font-weight: 1500;
-    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.6);
-  }
+/* Imagem entre título e texto (resposiva e centralizada) */
+.header-graphic {
+  display: block;
+  width: min(300px, 70%);
+  max-width: 300px;
+  height: auto;
+  margin: 12px auto 14px;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0);
+  object-fit: contain;
+}
 
-  main {
-    flex: 1 0 auto;
-  }
+/* Conteúdo principal expande para empurrar o footer quando necessário */
+main {
+  flex: 1 0 auto;
+}
 
-  footer {
-    flex-shrink: 0;
-    text-align: center;
-    padding: 10px 20px;
-    color: var(--muted);
-    font-size: 16px;
-    background: rgba(255, 255, 255, 0.96);
-    border-top: 1px solid rgba(0, 0, 0, 0.04);
-    border-radius: 20px;
+footer {
+  flex-shrink: 0;
+  text-align: center;
+  padding: 10px 20px;
+  color: var(--muted);
+  font-size: 16px;
+  background: rgba(255, 255, 255, 0.96);
+  border-top: 1px solid rgba(0, 0, 0, 0.04);
+  border-radius: 12px;
+  margin-top: 20px;
+}
 
-  }
+/* Count down (fixo no canto) */
+.countdown-timer {
+  position: fixed;
+  top: 12px;
+  right: 12px;
+  background: rgba(255, 255, 255, 0.98);
+  color: var(--primary);
+  padding: 8px 12px;
+  border-radius: 12px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
+  font-weight: 700;
+  z-index: 999;
+  display: inline-block;
+  line-height: 1;
+  min-width: 120px;
+  text-align: center;
+  font-family: inherit;
+  transition: transform .12s ease, opacity .12s ease;
+  transform: translateZ(0);
+}
 
-  /* Header specific tweaks to avoid overlap when fixed elements are used */
-  header.site-header {
-    padding: 24px 20px;
-    text-align: center;
-    position: relative;
-    z-index: 1;
-  }
-
-  header.site-header .site-title {
-    /* mais específico para evitar overrides de resets/Tailwind */
-    font-size: clamp(22px, 4.2vw, 34px);
-    margin: 0 0 8px;
-    color: var(--primary);
-    font-weight: 800;
-    line-height: 1.05;
-  }
-
+@media (max-width:480px) {
   .countdown-timer {
-    position: fixed;
-    top: 12px;
-    right: 12px;
-    background: rgba(255, 255, 255, 0.98);
-    color: var(--primary);
-    padding: 8px 12px;
-    border-radius: 12px;
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
-    font-weight: 700;
-    z-index: 999;
-    /* suficientemente alto, mas não absurdo */
-    display: inline-block;
-    line-height: 1;
-    min-width: 120px;
-    /* mais conservador */
-    text-align: center;
-    font-family: inherit;
-    transition: transform .12s ease, opacity .12s ease;
-    transform: translateZ(0);
-    /* melhora performance */
+    top: 8px;
+    right: 8px;
+    font-size: 13px;
+    padding: 6px 8px;
+    min-width: 110px;
   }
+}
 
-  @media (max-width:480px) {
-    .countdown-timer {
-      top: 8px;
-      right: 8px;
-      font-size: 13px;
-      padding: 6px 8px;
-      min-width: 110px;
-    }
-  }
+/* Views / Panels */
+.view-container {
+  display: block;
+  transition: opacity .20s ease;
+}
 
-  .view-container {
-    display: block;
-    transition: opacity .20s ease;
-  }
+.panel {
+  background: var(--panel-bg);
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+  margin: 18px 0;
+}
 
-  .panel {
-    background: var(--panel-bg);
-    padding: 20px;
-    border-radius: 12px;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
-    margin: 18px 0;
-  }
+.hidden {
+  display: none !important;
+}
 
-  .hidden {
-    display: none !important;
-  }
+/* Section titles */
+h2,
+.section-title {
+  text-align: center;
+  font-size: 20px;
+  margin: 0 0 10px;
+  color: var(--primary);
+  font-weight: 700;
+}
 
-  /* garantir h2 e títulos */
-  h1 {
-    font-size: 28px;
-    margin: 0 0 8px;
-    color: var(--primary);
-    font-weight: 800;
-  }
+p {
+  color: #333;
+  line-height: 1.45;
+  margin: 0 0 10px;
+}
 
-  h2,
-  .section-title {
-    text-align: center;
-    font-size: 20px;
-    margin: 0 0 10px;
-    color: var(--primary);
-    font-weight: 700;
-  }
+/* Choice buttons (PIX / Lista) */
+.choice-buttons {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  margin: 18px 0 6px 0;
+  flex-wrap: wrap;
+}
 
+.choice-button {
+  background: linear-gradient(135deg, #e6f3ff, #d9ecff);
+  color: var(--primary);
+  border-radius: 12px;
+  padding: 10px 18px;
+  text-decoration: none;
+  font-weight: 700;
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition: all .16s ease;
+  box-shadow: none;
+  min-width: 140px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
 
-  p {
-    color: #333;
-    line-height: 1.45;
-    margin: 0 0 10px;
-  }
+.choice-button:hover,
+.choice-button:focus {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(74, 144, 226, 0.08);
+  outline: none;
+}
 
-  .choice-buttons {
-    display: flex;
-    gap: 12px;
-    justify-content: center;
-    margin: 18px 0 6px 0;
-    flex-wrap: wrap;
-  }
+.choice-button.active {
+  background: linear-gradient(135deg, var(--accent), #357abd);
+  color: #fff;
+  border-color: rgba(0, 0, 0, 0.06);
+}
 
-  .choice-button {
-    background: linear-gradient(135deg, #e6f3ff, #d9ecff);
-    color: var(--primary);
-    border-radius: 12px;
-    padding: 10px 18px;
-    text-decoration: none;
-    font-weight: 700;
-    cursor: pointer;
-    border: 1px solid transparent;
-    transition: all .16s ease;
-    box-shadow: none;
-    min-width: 140px;
-    /* evita mudança de largura quando ativa */
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-  }
+/* Grid / Cards (legacy, ainda suportado) */
+.items-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 18px;
+  margin-top: 12px;
+}
 
-  .choice-button:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 18px rgba(74, 144, 226, 0.08);
-  }
+.item-card {
+  background: #fff;
+  border-radius: 12px;
+  padding: 12px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.04);
+}
 
-  .choice-button.active {
-    background: linear-gradient(135deg, var(--accent), #357abd);
-    color: #fff;
-    border-color: rgba(0, 0, 0, 0.06);
-  }
+/* PIX area */
+#pix-data {
+  color: #333;
+}
 
+#pix-data p {
+  margin: 6px 0;
+  color: #333;
+}
+
+#pix-data strong {
+  color: var(--primary);
+}
+
+/* QR fixed dimensions to avoid reflow */
+#pix-data img {
+  width: 160px;
+  height: 160px;
+  object-fit: cover;
+  display: block;
+  margin: 0 auto;
+  border-radius: 8px;
+}
+
+/* toast/popup neutral */
+#pix-toast {
+  font-family: inherit;
+}
+
+/* Responsive adjustments */
+@media (max-width:640px) {
   .items-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 18px;
-    margin-top: 12px;
+    grid-template-columns: 1fr;
   }
 
-  .item-card {
-    background: #fff;
-    border-radius: 12px;
-    padding: 12px;
-    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.04);
+  header.site-header h1,
+  header h1 {
+    font-size: 28px;
   }
 
-  .item-image {
-    font-size: 48px;
-    text-align: center;
-    padding: 14px;
+  .header-graphic {
+    width: min(300px, 80%);
+    margin: 10px auto 12px;
   }
+}
 
-  .item-content {
-    padding: 8px 6px;
-  }
+/* LISTA INTERATIVA: lista expansível */
+.items-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: block;
+  gap: 12px;
+}
 
-  .item-name {
-    color: var(--primary);
-    font-weight: 700;
-    margin: 6px 0;
-  }
+.item-row {
+  background: var(--panel-bg);
+  border-radius: 12px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.04);
+  overflow: hidden;
+  transition: box-shadow .18s ease, transform .12s ease;
+  border: 1px solid rgba(0, 0, 0, 0.03);
+}
 
-  #pix-data {
-    color: #333;
-  }
+.item-row:focus-within,
+.item-row:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.06);
+}
 
-  #pix-data p {
-    margin: 6px 0;
-    color: #333;
-  }
+.row-main {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding: 14px 18px;
+  cursor: pointer;
+}
 
-  #pix-data strong {
-    color: var(--primary);
-  }
+.row-main .item-image {
+  font-size: 38px;
+  width: 56px;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  background: linear-gradient(135deg, #f7fafc, #eef5ff);
+}
 
-  /* evitar reflow: dimensionar o QR e tratar imagens de forma previsível */
-  #pix-data img {
-    width: 160px;
-    height: 160px;
-    object-fit: cover;
-    display: block;
-    margin: 0 auto;
-    border-radius: 8px;
-  }
+.row-main .meta {
+  flex: 1;
+  min-width: 0;
+}
 
-  /* toast/popup neutral */
-  #pix-toast {
-    font-family: inherit;
-  }
+.row-main .meta .name {
+  font-weight: 700;
+  color: var(--primary);
+  font-size: 16px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
 
-  @media (max-width:640px) {
-    .items-grid {
-      grid-template-columns: 1fr;
-    }
+.row-main .meta .short {
+  color: #666;
+  font-size: 14px;
+  margin-top: 4px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
 
-    header.site-header .site-title {
-      font-size: 22px;
-    }
-  }
+.row-actions {
+  margin-left: 8px;
+  color: var(--muted);
+  font-weight: 700;
+  font-size: 13px;
+}
 
-  /* LISTA INTERATIVA: substitui grid por lista expansível */
-  .items-list {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    display: block;
-    gap: 12px;
-  }
+.row-detail {
+  padding: 14px 18px 18px 18px;
+  border-top: 1px solid rgba(0, 0, 0, 0.04);
+  background: linear-gradient(180deg, rgba(250, 250, 252, 0.8), rgba(255, 255, 255, 0.98));
+  display: none;
+}
 
-  .item-row {
-    background: var(--panel-bg);
-    border-radius: 12px;
-    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.04);
-    overflow: hidden;
-    transition: box-shadow .18s ease, transform .12s ease;
-    border: 1px solid rgba(0, 0, 0, 0.03);
-  }
+.item-row[aria-expanded="true"] .row-detail {
+  display: block;
+}
 
-  .item-row:focus-within,
-  .item-row:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.06);
-  }
+.row-detail .buy-area {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  justify-content: flex-end;
+}
 
+.row-detail .buy-info {
+  flex: 1;
+  color: #444;
+  font-size: 14px;
+}
+
+/* smaller screens: compact spacing */
+@media (max-width:640px) {
   .row-main {
-    display: flex;
-    align-items: center;
-    gap: 18px;
-    padding: 14px 18px;
-    cursor: pointer;
+    padding: 12px;
+    gap: 12px;
   }
 
   .row-main .item-image {
-    font-size: 38px;
-    width: 56px;
-    height: 56px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 8px;
-    background: linear-gradient(135deg, #f7fafc, #eef5ff);
+    width: 48px;
+    height: 48px;
+    font-size: 30px;
   }
+}
 
-  .row-main .meta {
-    flex: 1;
-    min-width: 0;
-  }
+/* Estiliza o link "Comprar Presente" para ficar igual ao botão de copiar PIX */
+a.buy-button,
+button.buy-button {
+  background: linear-gradient(135deg, #e6f3ff, #d9ecff);
+  color: var(--primary);
+  border-radius: 12px;
+  padding: 10px 16px;
+  font-weight: 700;
+  text-decoration: none;
+  border: 1px solid transparent;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform .12s ease, box-shadow .12s ease, background .12s ease;
+  box-shadow: none;
+  cursor: pointer;
+  min-width: 140px;
+}
 
-  .row-main .meta .name {
-    font-weight: 700;
-    color: var(--primary);
-    font-size: 16px;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    overflow: hidden;
-  }
+/* hover / foco */
+a.buy-button:hover,
+button.buy-button:hover,
+a.buy-button:focus,
+button.buy-button:focus {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(74, 144, 226, 0.08);
+  outline: none;
+}
 
-  .row-main .meta .short {
-    color: #666;
-    font-size: 14px;
-    margin-top: 4px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-  }
+/* aparência "ativa" */
+a.buy-button.primary,
+button.buy-button.primary {
+  background: linear-gradient(135deg, var(--accent), #357abd);
+  color: #fff;
+  border-color: rgba(0, 0, 0, 0.06);
+}
 
-  .row-actions {
-    margin-left: 8px;
-    color: var(--muted);
-    font-weight: 700;
-    font-size: 13px;
-  }
-
-  .row-detail {
-    padding: 14px 18px 18px 18px;
-    border-top: 1px solid rgba(0, 0, 0, 0.04);
-    background: linear-gradient(180deg, rgba(250, 250, 252, 0.8), rgba(255, 255, 255, 0.98));
-    display: none;
-  }
-
-  .item-row[aria-expanded="true"] .row-detail {
-    display: block;
-  }
-
-  .row-detail .buy-area {
-    display: flex;
-    gap: 12px;
-    align-items: center;
-    justify-content: flex-end;
-  }
-
-  .row-detail .buy-info {
-    flex: 1;
-    color: #444;
-    font-size: 14px;
-  }
-
-  @media (max-width:640px) {
-    .row-main {
-      padding: 12px;
-      gap: 12px;
-    }
-
-    .row-main .item-image {
-      width: 48px;
-      height: 48px;
-      font-size: 30px;
-    }
-  }
-
-  /* Estiliza o link "Comprar Presente" para ficar igual ao botão de copiar PIX */
+/* em telas pequenas, faz o botão ocupar toda largura do container quando desejado */
+@media (max-width:640px) {
   a.buy-button,
   button.buy-button {
-    background: linear-gradient(135deg, #e6f3ff, #d9ecff);
-    color: var(--primary);
-    border-radius: 12px;
-    padding: 10px 16px;
-    font-weight: 700;
-    text-decoration: none;
-    border: 1px solid transparent;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    transition: transform .12s ease, box-shadow .12s ease, background .12s ease;
-    box-shadow: none;
-    cursor: pointer;
-    min-width: 140px;
-    /* mantém largura parecida com os botões de escolha */
+    width: 100%;
+    min-width: 0;
   }
-
-  /* hover / foco */
-  a.buy-button:hover,
-  button.buy-button:hover,
-  a.buy-button:focus,
-  button.buy-button:focus {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 18px rgba(74, 144, 226, 0.08);
-    outline: none;
-  }
-
-  /* aparência "ativa" (se quiser marcar visualmente) */
-  a.buy-button.primary,
-  button.buy-button.primary {
-    background: linear-gradient(135deg, var(--accent), #357abd);
-    color: #fff;
-    border-color: rgba(0, 0, 0, 0.06);
-  }
-
-  /* em telas pequenas, faz o botão ocupar toda largura do container quando desejado */
-  @media (max-width:640px) {
-
-    a.buy-button,
-    button.buy-button {
-      width: 100%;
-      min-width: 0;
-    }
-  }
+}
