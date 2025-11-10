@@ -1,197 +1,140 @@
 <!doctype html>
 <html lang="pt-BR">
- <head>
+
+<head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Lista de presentes do Chá de Fralda do Apollo — escolha um presente especial para o nosso pequeno.">
+  <meta name="description"
+    content="Lista de presentes do Chá de Fralda do Apollo — escolha um presente especial para o nosso pequeno.">
   <title>Chá de Fralda</title>
   <link rel="stylesheet" href="css/styles.css">
   <script src="js/countdown.js" defer></script>
   <script src="js/views.js" defer></script>
   <script src="js/copy-pix.js" defer></script>
+  <script src="js/items.js" defer></script>
+</head>
 
-  <style>
-    :root{
-      --primary: #214a77;
-      --accent:  #4a90e2;
-      --muted:   #666;
-      --bg:      #f7f9fc;
-      --panel-bg:#ffffff;
-      --success: #2a7d32;
-      --danger:  #c33;
-    }
-
-    html, body { height: 100%; margin: 0; padding: 0; }
-    body{
-      font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
-      color: #222;
-      background: var(--bg);
-      -webkit-font-smoothing:antialiased;
-      -moz-osx-font-smoothing:grayscale;
-    }
-
-    .container { min-height: 100vh; display: flex; flex-direction: column; }
-    main { flex: 1 0 auto; }
-    footer { flex-shrink: 0; text-align: center; padding: 18px 20px; color: var(--muted); font-size: 16px; background: rgba(255,255,255,0.96); border-top: 1px solid rgba(0,0,0,0.04); }
-
-    .countdown-timer{
-      position: fixed;
-      top: 18px;
-      right: 18px;
-      background: rgba(255,255,255,0.96);
-      color: var(--primary);
-      padding: 10px 14px;
-      border-radius: 12px;
-      box-shadow: 0 6px 20px rgba(0,0,0,0.12);
-      font-weight: 700;
-      z-index: 9999;
-      display: inline-block;
-      line-height: 1;
-      min-width: 180px;
-      text-align: center;
-      font-family: inherit;
-    }
-    @media (max-width:480px){
-      .countdown-timer{ top: 10px; right: 10px; font-size:13px; padding:8px 10px; min-width: 140px; }
-    }
-
-    .view-container { display: block; transition: opacity .25s ease; }
-    .panel {
-      background: var(--panel-bg);
-      padding: 20px;
-      border-radius: 12px;
-      box-shadow: 0 8px 24px rgba(0,0,0,0.06);
-      margin: 18px 0;
-    }
-    .hidden { display: none !important; }
-
-    h1 { font-size: 28px; margin: 0 0 8px; color: var(--primary); font-weight: 800; }
-    h2, .section-title { font-size: 20px; margin: 0 0 10px; color: var(--primary); font-weight: 700; }
-    p { color: #333; line-height: 1.45; margin: 0 0 10px; }
-
-    .choice-buttons { display:flex; gap:12px; justify-content:center; margin: 18px 0 6px 0; flex-wrap:wrap;}
-    .choice-button {
-      background: linear-gradient(135deg,#e6f3ff,#d9ecff);
-      color: var(--primary);
-      border-radius:12px;
-      padding:10px 18px;
-      text-decoration:none;
-      font-weight:700;
-      cursor:pointer;
-      border:1px solid transparent;
-      transition: all .16s ease;
-      box-shadow: none;
-    }
-    .choice-button:hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(74,144,226,0.08); }
-    .choice-button.active {
-      background: linear-gradient(135deg,var(--accent),#357abd);
-      color:#fff;
-      border-color: rgba(0,0,0,0.06);
-    }
-
-    .items-grid { display:grid; grid-template-columns: repeat(auto-fill,minmax(300px,1fr)); gap:18px; margin-top:12px; }
-    .item-card { background:#fff; border-radius:12px; padding:12px; box-shadow:0 6px 18px rgba(0,0,0,0.04); }
-    .item-image { font-size:48px; text-align:center; padding:14px; }
-    .item-content { padding:8px 6px; }
-    .item-name { color: var(--primary); font-weight: 700; margin: 6px 0; }
-
-    #pix-data { color: #333; }
-    #pix-data p { margin: 6px 0; color: #333; }
-    #pix-data strong { color: var(--primary); }
-    #pix-data img { max-width:160px; height:auto; display:block; margin:0 auto; border-radius:8px; }
-
-    #pix-toast{ font-family:inherit; }
-
-    @media (max-width:640px){
-      .items-grid { grid-template-columns: 1fr; }
-      h1 { font-size:22px; }
-    }
-  </style>
- </head>
- <body>
+<body>
   <div class="container">
-   <header style="padding:24px 20px; text-align:center;">
-    <h1>Chá de Fralda do Apollo</h1>
-    <p class="welcome-text">Bem-vindos ao nosso chá de bebê online! Escolha um presente especial para o nosso novo astro!</p>
+    <header style="padding:24px 20px; text-align:center;">
+      <h1>Chá de Fralda do Apollo</h1>
+      <p class="welcome-text">Bem-vindos ao nosso chá de bebê online! Escolha um presente especial para o nosso novo
+        astro!</p>
 
-    <div id="countdown-timer" class="countdown-timer" aria-live="polite">Carregando contador...</div>
+      <div id="countdown-timer" class="countdown-timer" aria-live="polite">Carregando contador...</div>
 
-    <div class="choice-buttons" aria-hidden="false" style="margin-top:16px;">
-      <button id="btn-pix" class="choice-button" type="button" aria-pressed="false">Fazer PIX</button>
-      <button id="btn-list" class="choice-button" type="button" aria-pressed="false">Ver Lista de Presentes</button>
-    </div>
-   </header>
+      <div class="choice-buttons" aria-hidden="false" style="margin-top:16px;">
+        <button id="btn-pix" class="choice-button" type="button" aria-pressed="false">Fazer PIX</button>
+        <button id="btn-list" class="choice-button" type="button" aria-pressed="false">Ver Lista de Presentes</button>
+      </div>
+    </header>
 
-   <main style="width:100%;max-width:1200px;margin:0 auto;padding:16px;">
-    <section id="home-view" class="view-container panel">
-      <h2 class="section-title">Toda ajuda é bem vinda!</h2>
-      <p>Escolha "<b>Ver Lista de Presentes</b>" para abrir as opções disponíveis de presentes para o Apollo ou "<b>Faça um PIX</b>" para nos ajudar com as futuras fraldas!</p>
-    </section>
+    <main style="width:100%;max-width:1200px;margin:0 auto;padding:16px;">
+      <section id="home-view" class="view-container panel">
+        <h2 class="section-title">Toda ajuda é bem vinda!</h2>
+        <p>Escolha "<b>Ver Lista de Presentes</b>" para abrir as opções disponíveis de presentes para o Apollo ou
+          "<b>Faça um PIX</b>" para nos ajudar com as futuras fraldas!</p>
+      </section>
 
-    <section id="pix-view" class="view-container panel hidden" aria-hidden="true">
-      <h2 class="section-title">Fazer PIX</h2>
-      <p>Abaixo estão os dados para realizar o PIX. Use o QR Code no app do seu banco ou copie a chave.</p>
+      <section id="pix-view" class="view-container panel hidden" aria-hidden="true">
+        <h2 class="section-title"> Fazer PIX</h2>
+        <p>Abaixo estão os dados para realizar o PIX. Use o QR Code no app do seu banco ou copie a chave.</p>
 
-      <div id="pix-data" style="margin-top:10px;">
-        <p><strong>Chave PIX:</strong> 857ed555-b4b6-4606-a688-931e35a388df</p>
-        <p><strong>Nome:</strong> Matheus Alexander Sol</p>
-        <p><strong>Valor sugerido:</strong> Livre</p>
+        <div id="pix-data" style="margin-top:10px;">
+          <p><strong>Chave PIX:</strong> 857ed555-b4b6-4606-a688-931e35a388df</p>
+          <p><strong>Nome:</strong> Matheus Alexander Sol</p>
+          <p><strong>Valor sugerido:</strong> Livre</p>
 
-        <div style="margin-top:12px; text-align:center;">
-          <img
-            src="https://api.qrserver.com/v1/create-qr-code/?size=160x160&data=00020126850014BR.GOV.BCB.PIX0136857ed555-b4b6-4606-a688-931e35a388df0223Ch%C3%A1%20de%20Fralda%20do%20Apollo5204000053039865802BR5921Matheus%20Alexander%20Sol6009SAO%20PAULO62140510QK24oXuaCo6304A982"
-            alt="QR code PIX (escaneie para pagar)"
-            style="border-radius:8px; display:block; margin:0 auto;">
-          <div style="text-align:center;margin-top:12px;">
-            <button id="copy-pix" class="choice-button" type="button" aria-label="Copiar Chave PIX">Copiar Chave PIX</button>
+          <div style="margin-top:12px; text-align:center;">
+            <img
+              src="https://api.qrserver.com/v1/create-qr-code/?size=160x160&data=00020126850014BR.GOV.BCB.PIX0136857ed555-b4b6-4606-a688-931e35a388df0223Ch%C3%A1%20de%20Fralda%20do%20Apollo5204000053039865802BR5921Matheus%20Alexander%20Sol6009SAO%20PAULO62140510QK24oXuaCo6304A982"
+              alt="QR code PIX (escaneie para pagar)" style="border-radius:8px; display:block; margin:0 auto;">
+            <div style="text-align:center;margin-top:12px;">
+              <button id="copy-pix" class="choice-button" type="button" aria-label="Copiar Chave PIX">Copiar Chave
+                PIX</button>
+            </div>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
 
-    <section id="list-view" class="view-container panel hidden" aria-hidden="true">
-      <h2 class="section-title">Lista de Presentes</h2>
-      <div class="items-grid" id="items-grid-copy">
-       <div class="item-card">
-        <div class="item-image" role="img" aria-label="Ícone mamadeira">🍼</div>
-        <div class="item-content">
-         <h3 class="item-name">Mamadeiras Anticólica</h3>
-         <p class="item-description">Kit com 3 mamadeiras anticólica de diferentes tamanhos (150ml, 240ml, 330ml)</p>
-         <p class="item-quantity">Quantidade: 1 kit</p>
-         <a href="https://www.amazon.com.br/s?k=mamadeira+anticólica" target="_blank" rel="noopener noreferrer" class="buy-button">Comprar Presente</a>
-        </div>
-       </div>
+      <section id="list-view" class="view-container panel hidden" aria-hidden="true">
+        <h2 class="section-title">Lista de Presentes</h2>
+        <ul class="items-list" id="items-grid-copy">
+          <li class="item-row" data-url="https://www.amazon.com.br/s?k=mamadeira+anticólica" tabindex="0" role="button"
+            aria-expanded="false">
+            <div class="row-main" aria-hidden="false">
+              <div class="item-image" aria-hidden="true">🍼</div>
+              <div class="meta">
+                <div class="name">Mamadeiras Anticólica</div>
+                <div class="short">Kit com 3 mamadeiras — 150ml, 240ml, 330ml</div>
+              </div>
+              <div class="row-actions">1 kit</div>
+            </div>
+            <div class="row-detail" aria-hidden="true">
+              <div class="buy-info">
+                <div><strong>Descrição:</strong> Kit com 3 mamadeiras anticólica de diferentes tamanhos.</div>
+                <div style="margin-top:8px;"><strong>Quantidade necessária:</strong> 1 kit</div>
+              </div>
+              <div class="buy-area">
+                <a class="choice-button buy-button" href="https://www.amazon.com.br/s?k=mamadeira+anticólica" target="_blank"
+                  rel="noopener noreferrer">Abrir na Loja</a>
+              </div>
+            </div>
+          </li>
 
-       <div class="item-card">
-        <div class="item-image" role="img" aria-label="Ícone bebê">👶</div>
-        <div class="item-content">
-         <h3 class="item-name">Fraldas Tamanho RN/P</h3>
-         <p class="item-description">Pacotes de fraldas descartáveis tamanho RN e P, macias e com alta absorção</p>
-         <p class="item-quantity">Quantidade: 3 pacotes</p>
-         <a href="https://www.amazon.com.br/s?k=fraldas+pampers+rn" target="_blank" rel="noopener noreferrer" class="buy-button">Comprar Presente</a>
-        </div>
-       </div>
+          <li class="item-row" data-url="https://www.amazon.com.br/s?k=fraldas+pampers+rn" tabindex="0" role="button"
+            aria-expanded="false">
+            <div class="row-main">
+              <div class="item-image" aria-hidden="true">👶</div>
+              <div class="meta">
+                <div class="name">Fraldas Tamanho RN/P</div>
+                <div class="short">Pacotes de fraldas descartáveis tamanho RN e P</div>
+              </div>
+              <div class="row-actions">3 pacotes</div>
+            </div>
+            <div class="row-detail" aria-hidden="true">
+              <div class="buy-info">
+                <div><strong>Descrição:</strong> Pacotes de fraldas descartáveis tamanho RN e P, macias e com alta
+                  absorção.</div>
+              </div>
+              <div class="buy-area">
+                <a class="choice-button buy-button" href="https://www.amazon.com.br/s?k=fraldas+pampers+rn" target="_blank"
+                  rel="noopener noreferrer">Abrir na Loja</a>
+              </div>
+            </div>
+          </li>
 
-       <div class="item-card">
-        <div class="item-image" role="img" aria-label="Ícone ursinho de pelúcia">🧸</div>
-        <div class="item-content">
-         <h3 class="item-name">Ursinho de Pelúcia Azul</h3>
-         <p class="item-description">Ursinho macio e fofo em tons de azul para acompanhar o bebê</p>
-         <p class="item-quantity">Quantidade: 1 unidade</p>
-         <a href="https://www.amazon.com.br/s?k=ursinho+pelúcia+azul+bebê" target="_blank" rel="noopener noreferrer" class="buy-button">Comprar Presente</a>
-        </div>
-       </div>
+          <li class="item-row" data-url="https://www.amazon.com.br/s?k=ursinho+pelúcia+azul+bebê" tabindex="0"
+            role="button" aria-expanded="false">
+            <div class="row-main">
+              <div class="item-image" aria-hidden="true">🧸</div>
+              <div class="meta">
+                <div class="name">Ursinho de Pelúcia Azul</div>
+                <div class="short">Ursinho macio e fofo em tons de azul</div>
+              </div>
+              <div class="row-actions">1 unidade</div>
+            </div>
+            <div class="row-detail" aria-hidden="true">
+              <div class="buy-info">
+                <div><strong>Descrição:</strong> Ursinho macio e fofinho para acompanhar o bebê.</div>
+              </div>
+              <div class="buy-area">
+                <a class="choice-button buy-button" href="https://www.amazon.com.br/s?k=ursinho+pelúcia+azul+bebê" target="_blank"
+                  rel="noopener noreferrer">Abrir na Loja</a>
+              </div>
+            </div>
+          </li>
 
-       <!-- mais itens... -->
-      </div>
-    </section>
-   </main>
+          <!-- adicione mais <li class="item-row"> aqui seguindo o mesmo padrão -->
+        </ul>
+      </section>
+    </main>
 
-   <footer>
-    <p>Obrigada por fazer parte deste momento especial! 💙👶</p>
-    <p><strong>Período para Presentes (online):</strong> <span id="event-date">09/11/2025 até 30/12/2025</span></p>
-   </footer>
+    <footer>
+      <p>Obrigada por fazer parte deste momento especial! 💙👶</p>
+      <p><strong>Período para Presentes (online):</strong> <span id="event-date">09/11/2025 até 30/12/2025</span></p>
+    </footer>
   </div>
+</body>
 
- </body>
 </html>
