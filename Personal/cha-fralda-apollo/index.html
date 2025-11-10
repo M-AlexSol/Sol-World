@@ -11,17 +11,35 @@
   <script src="js/copy-pix.js" defer></script>
 
   <style>
+    :root{
+      --primary: #214a77;
+      --accent:  #4a90e2;
+      --muted:   #666;
+      --bg:      #f7f9fc;
+      --panel-bg:#ffffff;
+      --success: #2a7d32;
+      --danger:  #c33;
+    }
+
     html, body { height: 100%; margin: 0; padding: 0; }
+    body{
+      font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      color: #222;
+      background: var(--bg);
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+    }
+
     .container { min-height: 100vh; display: flex; flex-direction: column; }
     main { flex: 1 0 auto; }
-    footer { flex-shrink: 0; text-align: center; padding: 18px 20px; color: #666; font-size: 16px; background: rgba(255,255,255,0.96); border-top: 1px solid rgba(0,0,0,0.04); }
+    footer { flex-shrink: 0; text-align: center; padding: 18px 20px; color: var(--muted); font-size: 16px; background: rgba(255,255,255,0.96); border-top: 1px solid rgba(0,0,0,0.04); }
 
     .countdown-timer{
       position: fixed;
       top: 18px;
       right: 18px;
       background: rgba(255,255,255,0.96);
-      color: #1f4e8a;
+      color: var(--primary);
       padding: 10px 14px;
       border-radius: 12px;
       box-shadow: 0 6px 20px rgba(0,0,0,0.12);
@@ -38,12 +56,23 @@
     }
 
     .view-container { display: block; transition: opacity .25s ease; }
+    .panel {
+      background: var(--panel-bg);
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.06);
+      margin: 18px 0;
+    }
     .hidden { display: none !important; }
+
+    h1 { font-size: 28px; margin: 0 0 8px; color: var(--primary); font-weight: 800; }
+    h2, .section-title { font-size: 20px; margin: 0 0 10px; color: var(--primary); font-weight: 700; }
+    p { color: #333; line-height: 1.45; margin: 0 0 10px; }
 
     .choice-buttons { display:flex; gap:12px; justify-content:center; margin: 18px 0 6px 0; flex-wrap:wrap;}
     .choice-button {
       background: linear-gradient(135deg,#e6f3ff,#d9ecff);
-      color:#214a77;
+      color: var(--primary);
       border-radius:12px;
       padding:10px 18px;
       text-decoration:none;
@@ -51,18 +80,32 @@
       cursor:pointer;
       border:1px solid transparent;
       transition: all .16s ease;
+      box-shadow: none;
     }
     .choice-button:hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(74,144,226,0.08); }
-    .choice-button.active { background: linear-gradient(135deg,#4a90e2,#357abd); color:white; border-color: rgba(0,0,0,0.06); }
+    .choice-button.active {
+      background: linear-gradient(135deg,var(--accent),#357abd);
+      color:#fff;
+      border-color: rgba(0,0,0,0.06);
+    }
 
-    .panel { background: rgba(255,255,255,0.98); padding: 20px; border-radius: 12px; box-shadow: 0 8px 24px rgba(0,0,0,0.06); margin: 18px 0; }
     .items-grid { display:grid; grid-template-columns: repeat(auto-fill,minmax(300px,1fr)); gap:18px; margin-top:12px; }
-    .item-card { background:white; border-radius:12px; padding:12px; box-shadow:0 6px 18px rgba(0,0,0,0.04); }
+    .item-card { background:#fff; border-radius:12px; padding:12px; box-shadow:0 6px 18px rgba(0,0,0,0.04); }
     .item-image { font-size:48px; text-align:center; padding:14px; }
     .item-content { padding:8px 6px; }
+    .item-name { color: var(--primary); font-weight: 700; margin: 6px 0; }
 
-    #home-view p { text-align: center; margin: 0 auto; }
-    #pix-data img { max-width:160px; height:auto; display:block; margin:0 auto; }
+    #pix-data { color: #333; }
+    #pix-data p { margin: 6px 0; color: #333; }
+    #pix-data strong { color: var(--primary); }
+    #pix-data img { max-width:160px; height:auto; display:block; margin:0 auto; border-radius:8px; }
+
+    #pix-toast{ font-family:inherit; }
+
+    @media (max-width:640px){
+      .items-grid { grid-template-columns: 1fr; }
+      h1 { font-size:22px; }
+    }
   </style>
  </head>
  <body>
@@ -82,30 +125,25 @@
    <main style="width:100%;max-width:1200px;margin:0 auto;padding:16px;">
     <section id="home-view" class="view-container panel">
       <h2 class="section-title">Toda ajuda é bem vinda!</h2>
-      <br>
       <p>Escolha "<b>Ver Lista de Presentes</b>" para abrir as opções disponíveis de presentes para o Apollo ou "<b>Faça um PIX</b>" para nos ajudar com as futuras fraldas!</p>
     </section>
 
     <section id="pix-view" class="view-container panel hidden" aria-hidden="true">
-      <h2>Fazer PIX</h2>
-      <p>Abaixo estão os dados para realizar o PIX. Clique no botão ou use o QR Code dentro do aplicativo do seu banco.</p>
+      <h2 class="section-title">Fazer PIX</h2>
+      <p>Abaixo estão os dados para realizar o PIX. Use o QR Code no app do seu banco ou copie a chave.</p>
 
       <div id="pix-data" style="margin-top:10px;">
         <p><strong>Chave PIX:</strong> 857ed555-b4b6-4606-a688-931e35a388df</p>
         <p><strong>Nome:</strong> Matheus Alexander Sol</p>
         <p><strong>Valor sugerido:</strong> Livre</p>
 
-        <div style="margin-top:12px;">
-          <a href="pix:00020126850014BR.GOV.BCB.PIX0136857ed555-b4b6-4606-a688-931e35a388df0223Ch%C3%A1%20de%20Fralda%20do%20Apollo5204000053039865802BR5921Matheus%20Alexander%20Sol6009SAO%20PAULO62140510QK24oXuaCo6304A982" target="_blank" rel="noopener noreferrer" title="Abrir PIX">
-            <img
-              src="https://api.qrserver.com/v1/create-qr-code/?size=160x160&data=00020126850014BR.GOV.BCB.PIX0136857ed555-b4b6-4606-a688-931e35a388df0223Ch%C3%A1%20de%20Fralda%20do%20Apollo5204000053039865802BR5921Matheus%20Alexander%20Sol6009SAO%20PAULO62140510QK24oXuaCo6304A982"
-              alt="QR code PIX (escaneie para pagar)"
-              style="border-radius:8px; display:block; margin:0 auto;">
-          </a>
-
-          <div style="text-align:center;margin-top:10px;">
+        <div style="margin-top:12px; text-align:center;">
+          <img
+            src="https://api.qrserver.com/v1/create-qr-code/?size=160x160&data=00020126850014BR.GOV.BCB.PIX0136857ed555-b4b6-4606-a688-931e35a388df0223Ch%C3%A1%20de%20Fralda%20do%20Apollo5204000053039865802BR5921Matheus%20Alexander%20Sol6009SAO%20PAULO62140510QK24oXuaCo6304A982"
+            alt="QR code PIX (escaneie para pagar)"
+            style="border-radius:8px; display:block; margin:0 auto;">
+          <div style="text-align:center;margin-top:12px;">
             <button id="copy-pix" class="choice-button" type="button" aria-label="Copiar Chave PIX">Copiar Chave PIX</button>
-            <span id="copy-pix-msg" style="display:inline-block;margin-left:10px;color:#2a7d32;opacity:0;transition:opacity .2s;font-weight:600;"></span>
           </div>
         </div>
       </div>
@@ -114,7 +152,6 @@
     <section id="list-view" class="view-container panel hidden" aria-hidden="true">
       <h2 class="section-title">Lista de Presentes</h2>
       <div class="items-grid" id="items-grid-copy">
-       <!-- itens... -->
        <div class="item-card">
         <div class="item-image" role="img" aria-label="Ícone mamadeira">🍼</div>
         <div class="item-content">
@@ -155,5 +192,6 @@
     <p><strong>Período para Presentes (online):</strong> <span id="event-date">09/11/2025 até 30/12/2025</span></p>
    </footer>
   </div>
+
  </body>
 </html>

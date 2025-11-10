@@ -1,18 +1,52 @@
-/* ALTERAÇÃO: copia a chave PIX para a área de transferência com fallback e mostra mensagem breve */
+/* ALTERAÇÃO: copia a chave PIX e mostra toast fixo por 5s (acessível, não desloca layout) */
 (function(){
   'use strict';
 
-  var PIX_KEY = '857ed555-b4b6-4606-a688-931e35a388df'; // ALTERAÇÃO: chave a ser copiada
+  var PIX_KEY = '857ed555-b4b6-4606-a688-931e35a388df';
   var btn = document.getElementById('copy-pix');
-  var msg = document.getElementById('copy-pix-msg');
 
-  function showMsg(text, ok){
-    if(!msg) return;
-    msg.textContent = text || '';
-    msg.style.color = ok ? '#2a7d32' : '#c33';
-    msg.style.opacity = '1';
-    clearTimeout(msg._t);
-    msg._t = setTimeout(function(){ msg.style.opacity = '0'; }, 2000);
+  function createToast(text, ok){
+    // remove antigo se existir
+    var existing = document.getElementById('pix-toast');
+    if(existing){
+      clearTimeout(existing._t);
+      existing.parentNode.removeChild(existing);
+    }
+
+    var toast = document.createElement('div');
+    toast.id = 'pix-toast';
+    toast.setAttribute('role','status');
+    toast.setAttribute('aria-live','polite');
+    toast.style.position = 'fixed';
+    toast.style.left = '50%';
+    toast.style.bottom = '24px';
+    toast.style.transform = 'translateX(-50%)';
+    toast.style.background = ok ? '#2a7d32' : '#c33';
+    toast.style.color = '#fff';
+    toast.style.padding = '12px 16px';
+    toast.style.borderRadius = '10px';
+    toast.style.boxShadow = '0 8px 30px rgba(0,0,0,0.18)';
+    toast.style.fontWeight = '700';
+    toast.style.zIndex = '200000';
+    toast.style.opacity = '0';
+    toast.style.transition = 'opacity .18s ease, transform .18s ease';
+    toast.textContent = text || (ok ? 'Copiado para a Área de Transferência' : 'Erro ao copiar');
+
+    document.body.appendChild(toast);
+    // for small entrance animation
+    requestAnimationFrame(function(){
+      toast.style.opacity = '1';
+      toast.style.transform = 'translateX(-50%) translateY(0)';
+    });
+
+    // hide after 5s
+    toast._t = setTimeout(function(){
+      toast.style.opacity = '0';
+      toast.style.transform = 'translateX(-50%) translateY(8px)';
+      setTimeout(function(){ if(toast.parentNode) toast.parentNode.removeChild(toast); }, 200);
+    }, 5000);
+
+    return toast;
   }
 
   function fallbackCopy(text){
@@ -36,19 +70,17 @@
   if(!btn) return;
 
   btn.addEventListener('click', function(){
-    // Prefer navigator.clipboard when disponível (mais confiável)
     if(navigator.clipboard && navigator.clipboard.writeText){
       navigator.clipboard.writeText(PIX_KEY).then(function(){
-        showMsg('Chave PIX copiada!', true);
+        createToast('Chave PIX copiada para a Área de Transferência', true);
         btn.focus();
       }).catch(function(){
         var ok = fallbackCopy(PIX_KEY);
-        showMsg(ok ? 'Chave PIX copiada!' : 'Erro ao copiar', ok);
+        createToast(ok ? 'Chave PIX copiada para a Área de Transferência' : 'Erro ao copiar', ok);
       });
     } else {
       var ok = fallbackCopy(PIX_KEY);
-      showMsg(ok ? 'Chave PIX copiada!' : 'Erro ao copiar', ok);
+      createToast(ok ? 'Chave PIX copiada para a Área de Transferência' : 'Erro ao copiar', ok);
     }
   });
-
 })();

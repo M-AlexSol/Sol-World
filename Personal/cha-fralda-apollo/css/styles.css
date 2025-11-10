@@ -1,3 +1,4 @@
+/* estilos principais - atualizado para usar imagem de fundo no header (images/solarsistem.png) */
 body {
   box-sizing: border-box;
   margin: 0;
@@ -17,21 +18,33 @@ body {
   padding: 40px 20px;
 }
 
+/* HEADER: agora usa a imagem solarsistem.png como background decorativo,
+   com um leve overlay branco para manter legibilidade do texto */
 header {
   text-align: center;
   margin-bottom: 50px;
-  background: rgba(255, 255, 255, 0.95);
-  padding: 40px 30px;
+  padding: 64px 30px 40px;
   border-radius: 20px;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+
+  /* primeiro o overlay branco semitransparente, depois a imagem.
+     Ajuste caminho: css/ -> ../images/solarsistem.png */
+  background-image:
+    linear-gradient(rgba(255,255,255,0.05), rgba(255,255,255,0.88)),
+    url('../images/solarsistem.png');
+  background-repeat: no-repeat;
+  background-position: right;
+  background-size: 195px auto;
+  background-color: rgba(255,255,255,0.15);
 }
 
+/* melhorar contraste do título sobre a imagem */
 header h1 {
   font-size: 64px !important;
-  color: #4a90e2;
+  color: #27486f;
   margin: 0 0 15px 0;
   font-weight: 800;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.05);
+  text-shadow: 0 1px 0 rgba(255,255,255,0.6);
 }
 
 .welcome-text {
@@ -150,9 +163,16 @@ footer {
   margin: 20px 0;
 }
 
+/* responsividade */
 @media (max-width: 768px) {
   .container {
     padding: 20px 15px;
+  }
+
+  header {
+    padding: 48px 20px 30px;
+    background-position: center 12px;
+    background-size: 180px auto;
   }
 
   header h1 {
@@ -171,10 +191,6 @@ footer {
     grid-template-columns: 1fr;
     gap: 20px;
   }
-
-  header {
-    padding: 30px 20px;
-  }
 }
 
 @media (max-width: 480px) {
@@ -192,5 +208,11 @@ footer {
 
   .item-content {
     padding: 20px;
+  }
+
+  header {
+    padding: 36px 16px 28px;
+    background-position: center 8px;
+    background-size: 140px auto;
   }
 }
