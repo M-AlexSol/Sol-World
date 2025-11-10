@@ -31,6 +31,10 @@
   }
 
   .container {
+    min-height: 100vh;
+    /* ocupa a altura da tela */
+    display: flex;
+    flex-direction: column;
     max-width: 1200px;
     margin: 0 auto;
     padding: 40px 15px;
@@ -61,7 +65,7 @@
     font-size: 64px !important;
     color: #0064df;
     margin: 0 0 15px 0;
-    font-weight: 800;
+    font-weight: 1500;
     text-shadow: 0 1px 0 rgba(255, 255, 255, 0.6);
   }
 
@@ -72,13 +76,13 @@
   footer {
     flex-shrink: 0;
     text-align: center;
-    padding: 30px 20px;
+    padding: 10px 20px;
     color: var(--muted);
     font-size: 16px;
     background: rgba(255, 255, 255, 0.96);
     border-top: 1px solid rgba(0, 0, 0, 0.04);
     border-radius: 20px;
-    
+
   }
 
   /* Header specific tweaks to avoid overlap when fixed elements are used */
@@ -158,6 +162,7 @@
 
   h2,
   .section-title {
+    text-align: center;
     font-size: 20px;
     margin: 0 0 10px;
     color: var(--primary);
