@@ -405,9 +405,241 @@ button.buy-button.primary {
 
 /* em telas pequenas, faz o botão ocupar toda largura do container quando desejado */
 @media (max-width:640px) {
+
   a.buy-button,
   button.buy-button {
     width: 100%;
     min-width: 0;
   }
+}
+
+/* Reserve UI: botão ao lado e modal de confirmação (append) */
+
+/* botão "Reservar" */
+.reserve-button {
+  background: #fff;
+  color: var(--primary);
+  border: 1px solid rgba(29, 116, 209, 0.12);
+  border-radius: 12px;
+  padding: 10px 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform .12s ease, box-shadow .12s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.reserve-button:hover,
+.reserve-button:focus {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(29, 116, 209, 0.06);
+  outline: none;
+}
+
+/* badge de reservado (substitui os botões) */
+.reserved-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #f0f0f0, #f2f6fb);
+  color: #666;
+  font-weight: 700;
+  border: 1px solid rgba(0, 0, 0, 0.04);
+}
+
+/* link para desfazer a reserva (visível localmente) */
+.unreserve-link {
+  margin-left: 8px;
+  background: transparent;
+  border: none;
+  color: var(--accent);
+  font-weight: 700;
+  cursor: pointer;
+  text-decoration: underline;
+  padding: 6px;
+}
+
+/* Modal de confirmação (overlay) */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(10, 20, 40, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+  padding: 20px;
+}
+
+.modal-dialog {
+  background: #fff;
+  max-width: 520px;
+  width: 100%;
+  border-radius: 12px;
+  padding: 18px;
+  box-shadow: 0 12px 40px rgba(10, 20, 40, 0.25);
+  color: #111;
+}
+
+.modal-dialog h3 {
+  margin: 0 0 8px;
+  color: var(--primary);
+  font-size: 18px;
+}
+
+.modal-dialog p {
+  margin: 0 0 12px;
+  color: #333;
+}
+
+.modal-actions {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+  margin-top: 12px;
+}
+
+.modal-actions .btn {
+  padding: 8px 12px;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.modal-actions .btn.cancel {
+  background: transparent;
+  color: var(--muted);
+  border: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+.modal-actions .btn.confirm {
+  background: linear-gradient(135deg, var(--accent), #357abd);
+  color: #fff;
+}
+
+/* responsividade */
+@media (max-width:480px) {
+  .modal-dialog {
+    padding: 14px;
+  }
+
+  .modal-actions {
+    flex-direction: column-reverse;
+    gap: 8px;
+  }
+}
+
+/* --- Reserva: estilo fosco + badge com nome --- */
+
+/* ao marcar reservado: deixa o card levemente opaco */
+.item-row.reserved {
+  opacity: 0.62;
+  transition: opacity .18s ease;
+}
+
+/* badge que mostra nome/estado */
+.reserved-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 12px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #f6f7fb, #f0f4ff);
+  color: var(--primary);
+  font-weight: 700;
+  border: 1px solid rgba(29, 116, 209, 0.08);
+}
+
+/* texto do nome dentro do badge (menor e com opacidade) */
+.reserved-badge .reserved-name {
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: rgba(0, 0, 0, 0.75);
+  opacity: 0.95;
+}
+
+/* botão para desfazer reserva (local) */
+.unreserve-link {
+  margin-left: 10px;
+  background: transparent;
+  border: none;
+  color: var(--accent);
+  font-weight: 700;
+  cursor: pointer;
+  text-decoration: underline;
+  padding: 6px;
+}
+
+/* Modal/confirm já existe no css anterior; se não, abaixo temos regras mínimas.
+   (Caso você já tenha outra modal, pode ajustar/mesclar.) */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(10, 20, 40, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+  padding: 20px;
+}
+
+.modal-dialog {
+  background: #fff;
+  max-width: 520px;
+  width: 100%;
+  border-radius: 12px;
+  padding: 18px;
+  box-shadow: 0 12px 40px rgba(10, 20, 40, 0.25);
+  color: #111;
+}
+
+.modal-dialog h3 {
+  margin: 0 0 8px;
+  color: var(--primary);
+  font-size: 18px;
+}
+
+.modal-dialog p {
+  margin: 0 0 12px;
+  color: #333;
+}
+
+/* campo de nome */
+.modal-dialog input[type="text"] {
+  width: 100%;
+  padding: 8px 10px;
+  border-radius: 8px;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  margin-top: 8px;
+  font-size: 15px;
+}
+
+.modal-actions {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+  margin-top: 12px;
+}
+
+.modal-actions .btn {
+  padding: 8px 12px;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.modal-actions .btn.cancel {
+  background: transparent;
+  color: var(--muted);
+  border: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+.modal-actions .btn.confirm {
+  background: linear-gradient(135deg, var(--accent), #357abd);
+  color: #fff;
 }

@@ -12,6 +12,10 @@
   <script src="js/views.js" defer></script>
   <script src="js/copy-pix.js" defer></script>
   <script src="js/items.js" defer></script>
+  <!-- <script src="js/reserve.js" defer></script>
+  <script src="js/reserve-firebase.js" defer></script> -->
+  <!-- local fallback removido para evitar conflitos — usando Firestore -->
+  <script type="module" src="js/reserve-firebase.js" defer></script>
 </head>
 
 <body>
@@ -63,73 +67,515 @@
 
       <section id="list-view" class="view-container panel hidden" aria-hidden="true">
         <h2 class="section-title">Lista de Presentes</h2>
+
+        <!-- Categoria: Higiene & Cuidados -->
+        <div class="section-title" style="font-size:16px;margin-top:6px;margin-bottom:8px;text-align:left;">Higiene
+          &amp; Cuidados</div>
         <ul class="items-list" id="items-grid-copy">
-          <li class="item-row" data-url="https://www.amazon.com.br/s?k=mamadeira+anticólica" tabindex="0" role="button"
-            aria-expanded="false">
-            <div class="row-main" aria-hidden="false">
-              <div class="item-image" aria-hidden="true">🍼</div>
+          <li class="item-row" data-url="https://www.amazon.com.br/Kit-Escova-Pente-Cerdas-Naturais/dp/B07QBHVG4R"
+            tabindex="0" role="button" aria-expanded="false">
+            <div class="row-main">
+              <div class="item-image" aria-hidden="true">🪥</div>
               <div class="meta">
-                <div class="name">Mamadeiras Anticólica</div>
-                <div class="short">Kit com 3 mamadeiras — 150ml, 240ml, 330ml</div>
+                <div class="name">Escova e Pente</div>
+                <div class="short">Kit de escova e pente com cerdas suaves para bebê</div>
               </div>
               <div class="row-actions">1 kit</div>
             </div>
             <div class="row-detail" aria-hidden="true">
               <div class="buy-info">
-                <div><strong>Descrição:</strong> Kit com 3 mamadeiras anticólica de diferentes tamanhos.</div>
-                <div style="margin-top:8px;"><strong>Quantidade necessária:</strong> 1 kit</div>
+                <div><strong>Descrição:</strong> Kit prático para higiene do cabelo do bebê.</div>
               </div>
               <div class="buy-area">
-                <a class="choice-button buy-button" href="https://www.amazon.com.br/s?k=mamadeira+anticólica"
-                  target="_blank" rel="noopener noreferrer">Abrir na Loja</a>
+                <a class="choice-button buy-button"
+                  href="https://www.amazon.com.br/Kit-Escova-Pente-Cerdas-Naturais/dp/B07QBHVG4R" target="_blank"
+                  rel="noopener noreferrer">Abrir na Loja</a>
               </div>
             </div>
           </li>
 
-          <li class="item-row" data-url="https://www.amazon.com.br/s?k=fraldas+pampers+rn" tabindex="0" role="button"
+          <li class="item-row" data-url="https://www.amazon.com.br/gp/product/B0DNR559V1" tabindex="0" role="button"
             aria-expanded="false">
             <div class="row-main">
-              <div class="item-image" aria-hidden="true">👶</div>
+              <div class="item-image" aria-hidden="true">💅</div>
               <div class="meta">
-                <div class="name">Fraldas Tamanho RN/P</div>
-                <div class="short">Pacotes de fraldas descartáveis tamanho RN e P</div>
+                <div class="name">Lixa de unha</div>
+                <div class="short">Lixas apropriadas para unhas de bebê</div>
               </div>
-              <div class="row-actions">3 pacotes</div>
+              <div class="row-actions">Pacote</div>
             </div>
             <div class="row-detail" aria-hidden="true">
               <div class="buy-info">
-                <div><strong>Descrição:</strong> Pacotes de fraldas descartáveis tamanho RN e P, macias e com alta
-                  absorção.</div>
+                <div><strong>Descrição:</strong> Lixas suaves para cortar e cuidar das unhas do bebê com segurança.
+                </div>
               </div>
               <div class="buy-area">
-                <a class="choice-button buy-button" href="https://www.amazon.com.br/s?k=fraldas+pampers+rn"
+                <a class="choice-button buy-button" href="https://www.amazon.com.br/gp/product/B0DNR559V1"
                   target="_blank" rel="noopener noreferrer">Abrir na Loja</a>
               </div>
             </div>
           </li>
 
-          <li class="item-row" data-url="https://www.amazon.com.br/s?k=ursinho+pelúcia+azul+bebê" tabindex="0"
-            role="button" aria-expanded="false">
+          <li class="item-row" data-url="https://www.amazon.com.br/gp/product/B0F8R6VN11" tabindex="0" role="button"
+            aria-expanded="false">
             <div class="row-main">
-              <div class="item-image" aria-hidden="true">🧸</div>
+              <div class="item-image" aria-hidden="true">🌡️</div>
               <div class="meta">
-                <div class="name">Ursinho de Pelúcia Azul</div>
-                <div class="short">Ursinho macio e fofo em tons de azul</div>
+                <div class="name">Termômetro</div>
+                <div class="short">Termômetro digital para medições rápidas</div>
               </div>
               <div class="row-actions">1 unidade</div>
             </div>
             <div class="row-detail" aria-hidden="true">
               <div class="buy-info">
-                <div><strong>Descrição:</strong> Ursinho macio e fofinho para acompanhar o bebê.</div>
+                <div><strong>Descrição:</strong> Medição rápida e segura da temperatura do bebê.</div>
               </div>
               <div class="buy-area">
-                <a class="choice-button buy-button" href="https://www.amazon.com.br/s?k=ursinho+pelúcia+azul+bebê"
+                <a class="choice-button buy-button" href="https://www.amazon.com.br/gp/product/B0F8R6VN11"
                   target="_blank" rel="noopener noreferrer">Abrir na Loja</a>
               </div>
             </div>
           </li>
 
-          <!-- adicione mais <li class="item-row"> aqui seguindo o mesmo padrão -->
+          <li class="item-row"
+            data-url="https://www.amazon.com.br/Aspirador-Nasal-Suc%C3%A7%C3%A3o-Seringa-Buba/dp/B0BVG9B3NF"
+            tabindex="0" role="button" aria-expanded="false">
+            <div class="row-main">
+              <div class="item-image" aria-hidden="true">👃</div>
+              <div class="meta">
+                <div class="name">Aspirador nasal</div>
+                <div class="short">Aspirador para limpeza nasal do bebê</div>
+              </div>
+              <div class="row-actions">1 unidade</div>
+            </div>
+            <div class="row-detail" aria-hidden="true">
+              <div class="buy-info">
+                <div><strong>Descrição:</strong> Ajuda a desobstruir o nariz e facilitar a respiração.</div>
+              </div>
+              <div class="buy-area">
+                <a class="choice-button buy-button"
+                  href="https://www.amazon.com.br/Aspirador-Nasal-Suc%C3%A7%C3%A3o-Seringa-Buba/dp/B0BVG9B3NF"
+                  target="_blank" rel="noopener noreferrer">Abrir na Loja</a>
+              </div>
+            </div>
+          </li>
+
+          <li class="item-row"
+            data-url="https://www.mercadolivre.com.br/chupeta-dosador-remedio-infantil-de-silicone-alimentadora-cor-branco/p/MLB40168005"
+            tabindex="0" role="button" aria-expanded="false">
+            <div class="row-main">
+              <div class="item-image" aria-hidden="true">💉</div>
+              <div class="meta">
+                <div class="name">Seringa dosadora (remédio)</div>
+                <div class="short">Dosador de remédio / chupeta dosadora</div>
+              </div>
+              <div class="row-actions">1 unidade</div>
+            </div>
+            <div class="row-detail" aria-hidden="true">
+              <div class="buy-info">
+                <div><strong>Descrição:</strong> Facilita a administração de medicamentos na dose correta.</div>
+              </div>
+              <div class="buy-area">
+                <a class="choice-button buy-button"
+                  href="https://www.mercadolivre.com.br/chupeta-dosador-remedio-infantil-de-silicone-alimentadora-cor-branco/p/MLB40168005"
+                  target="_blank" rel="noopener noreferrer">Abrir na Loja</a>
+              </div>
+            </div>
+          </li>
+        </ul>
+
+        <!-- Categoria: Alimentação & Amamentação -->
+        <div class="section-title" style="font-size:16px;margin-top:18px;margin-bottom:8px;text-align:left;">Alimentação
+          &amp; Amamentação</div>
+        <ul class="items-list">
+          <li class="item-row" data-url="https://www.amazon.com.br/gp/product/B0DDM2QGH8" tabindex="0" role="button"
+            aria-expanded="false">
+            <div class="row-main">
+              <div class="item-image" aria-hidden="true">🍼</div>
+              <div class="meta">
+                <div class="name">Coletor de leite</div>
+                <div class="short">Coletor de leite materno prático</div>
+              </div>
+              <div class="row-actions">1 unidade</div>
+            </div>
+            <div class="row-detail" aria-hidden="true">
+              <div class="buy-info">
+                <div><strong>Descrição:</strong> Ajuda na coleta do leite durante a amamentação.</div>
+              </div>
+              <div class="buy-area">
+                <a class="choice-button buy-button" href="https://www.amazon.com.br/gp/product/B0DDM2QGH8"
+                  target="_blank" rel="noopener noreferrer">Abrir na Loja</a>
+              </div>
+            </div>
+          </li>
+
+          <li class="item-row" data-url="https://www.amazon.com.br/Buba-Colher-Dosadora-Silicone-Ventosa/dp/B0DKY2LVCL"
+            tabindex="0" role="button" aria-expanded="false">
+            <div class="row-main">
+              <div class="item-image" aria-hidden="true">🥄</div>
+              <div class="meta">
+                <div class="name">Colher dosadora</div>
+                <div class="short">Colher dosadora de silicone com ventosa</div>
+              </div>
+              <div class="row-actions">1 unidade</div>
+            </div>
+            <div class="row-detail" aria-hidden="true">
+              <div class="buy-info">
+                <div><strong>Descrição:</strong> Facilita a alimentação do bebê com segurança.</div>
+              </div>
+              <div class="buy-area">
+                <a class="choice-button buy-button"
+                  href="https://www.amazon.com.br/Buba-Colher-Dosadora-Silicone-Ventosa/dp/B0DKY2LVCL" target="_blank"
+                  rel="noopener noreferrer">Abrir na Loja</a>
+              </div>
+            </div>
+          </li>
+
+          <li class="item-row"
+            data-url="https://www.amazon.com.br/Bolsa-t%C3%A9rmica-blister-Termogel-Verde/dp/B07KFRWP6L" tabindex="0"
+            role="button" aria-expanded="false">
+            <div class="row-main">
+              <div class="item-image" aria-hidden="true">🧊</div>
+              <div class="meta">
+                <div class="name">Bolsa térmica</div>
+                <div class="short">Bolsa térmica para compressas quentes/frio</div>
+              </div>
+              <div class="row-actions">1 unidade</div>
+            </div>
+            <div class="row-detail" aria-hidden="true">
+              <div class="buy-info">
+                <div><strong>Descrição:</strong> Útil para desconfortos e armazenamento térmico.</div>
+              </div>
+              <div class="buy-area">
+                <a class="choice-button buy-button"
+                  href="https://www.amazon.com.br/Bolsa-t%C3%A9rmica-blister-Termogel-Verde/dp/B07KFRWP6L"
+                  target="_blank" rel="noopener noreferrer">Abrir na Loja</a>
+              </div>
+            </div>
+          </li>
+        </ul>
+
+        <!-- Categoria: Roupinhas & Têxteis -->
+        <div class="section-title" style="font-size:16px;margin-top:18px;margin-bottom:8px;text-align:left;">Roupinhas
+          &amp; Têxteis</div>
+        <ul class="items-list">
+          <li class="item-row" data-url="https://www.tiptop.com.br/meninos/bebe-0-a-12-meses" tabindex="0" role="button"
+            aria-expanded="false">
+            <div class="row-main">
+              <div class="item-image" aria-hidden="true">👕</div>
+              <div class="meta">
+                <div class="name">Roupinhas RN</div>
+                <div class="short">Roupas tamanho RN para recém-nascido</div>
+              </div>
+              <div class="row-actions">várias</div>
+            </div>
+            <div class="row-detail" aria-hidden="true">
+              <div class="buy-info">
+                <div><strong>Descrição:</strong> Bodies, macacões e conjuntos RN.</div>
+              </div>
+              <div class="buy-area">
+                <a class="choice-button buy-button" href="https://www.tiptop.com.br/meninos/bebe-0-a-12-meses"
+                  target="_blank" rel="noopener noreferrer">Abrir na Loja</a>
+              </div>
+            </div>
+          </li>
+
+          <li class="item-row" data-url="https://www.vestircomamor.com.br/" tabindex="0" role="button"
+            aria-expanded="false">
+            <div class="row-main">
+              <div class="item-image" aria-hidden="true">🧸</div>
+              <div class="meta">
+                <div class="name">Roupinhas Tamanho M</div>
+                <div class="short">Roupinhas tamanho M (crescimento)</div>
+              </div>
+              <div class="row-actions">várias</div>
+            </div>
+            <div class="row-detail" aria-hidden="true">
+              <div class="buy-info">
+                <div><strong>Descrição:</strong> Conjuntos e bodies tamanho M.</div>
+              </div>
+              <div class="buy-area">
+                <a class="choice-button buy-button" href="https://www.vestircomamor.com.br/" target="_blank"
+                  rel="noopener noreferrer">Abrir na Loja</a>
+              </div>
+            </div>
+          </li>
+
+          <li class="item-row" data-url="https://www.amazon.com.br/Mantinha-Ovelhinha-Azul-BUBA/dp/B09888TC4W"
+            tabindex="0" role="button" aria-expanded="false">
+            <div class="row-main">
+              <div class="item-image" aria-hidden="true">🧣</div>
+              <div class="meta">
+                <div class="name">Mantinha</div>
+                <div class="short">Manta macia para aconchegar o bebê</div>
+              </div>
+              <div class="row-actions">1 unidade</div>
+            </div>
+            <div class="row-detail" aria-hidden="true">
+              <div class="buy-info">
+                <div><strong>Descrição:</strong> Mantinha para passeio e cama do bebê.</div>
+              </div>
+              <div class="buy-area">
+                <a class="choice-button buy-button"
+                  href="https://www.amazon.com.br/Mantinha-Ovelhinha-Azul-BUBA/dp/B09888TC4W" target="_blank"
+                  rel="noopener noreferrer">Abrir na Loja</a>
+              </div>
+            </div>
+          </li>
+
+          <li class="item-row" data-url="https://www.amazon.com.br/s?k=pano+de+boca&i=baby" tabindex="0" role="button"
+            aria-expanded="false">
+            <div class="row-main">
+              <div class="item-image" aria-hidden="true">🧻</div>
+              <div class="meta">
+                <div class="name">Pano de boca</div>
+                <div class="short">Panos para limpeza e sucção (paninhos)</div>
+              </div>
+              <div class="row-actions">Pacote</div>
+            </div>
+            <div class="row-detail" aria-hidden="true">
+              <div class="buy-info">
+                <div><strong>Descrição:</strong> Lenços/tecidos para higiene durante as mamadas.</div>
+              </div>
+              <div class="buy-area">
+                <a class="choice-button buy-button" href="https://www.amazon.com.br/s?k=pano+de+boca&i=baby"
+                  target="_blank" rel="noopener noreferrer">Abrir na Loja</a>
+              </div>
+            </div>
+          </li>
+
+          <li class="item-row" data-url="https://www.lojapapi.com.br/categoria/toalha-de-banho" tabindex="0"
+            role="button" aria-expanded="false">
+            <div class="row-main">
+              <div class="item-image" aria-hidden="true">🛁</div>
+              <div class="meta">
+                <div class="name">Toalha de banho</div>
+                <div class="short">Toalhas macias para o banho do bebê</div>
+              </div>
+              <div class="row-actions">1 unidade</div>
+            </div>
+            <div class="row-detail" aria-hidden="true">
+              <div class="buy-info">
+                <div><strong>Descrição:</strong> Toalhas com capuz e tecido macio.</div>
+              </div>
+              <div class="buy-area">
+                <a class="choice-button buy-button" href="https://www.lojapapi.com.br/categoria/toalha-de-banho"
+                  target="_blank" rel="noopener noreferrer">Abrir na Loja</a>
+              </div>
+            </div>
+          </li>
+        </ul>
+
+        <!-- Categoria: Passeio & Segurança -->
+        <div class="section-title" style="font-size:16px;margin-top:18px;margin-bottom:8px;text-align:left;">Passeio
+          &amp; Segurança</div>
+        <ul class="items-list">
+          <li class="item-row" data-url="https://www.amazon.com.br/Canguru-Freedom-Safety-1st-Black/dp/B09BVWHFRZ"
+            tabindex="0" role="button" aria-expanded="false">
+            <div class="row-main">
+              <div class="item-image" aria-hidden="true">🤱</div>
+              <div class="meta">
+                <div class="name">Canguru (Baby carrier)</div>
+                <div class="short">Canguru para transporte seguro do bebê</div>
+              </div>
+              <div class="row-actions">1 unidade</div>
+            </div>
+            <div class="row-detail" aria-hidden="true">
+              <div class="buy-info">
+                <div><strong>Descrição:</strong> Facilita caminhadas e passeio com as mãos livres.</div>
+              </div>
+              <div class="buy-area">
+                <a class="choice-button buy-button"
+                  href="https://www.amazon.com.br/Canguru-Freedom-Safety-1st-Black/dp/B09BVWHFRZ" target="_blank"
+                  rel="noopener noreferrer">Abrir na Loja</a>
+              </div>
+            </div>
+          </li>
+
+          <li class="item-row" data-url="https://www.amazon.com.br/gp/product/B0F55TCKZG" tabindex="0" role="button"
+            aria-expanded="false">
+            <div class="row-main">
+              <div class="item-image" aria-hidden="true">🛏️</div>
+              <div class="meta">
+                <div class="name">Colchonete Carrinho</div>
+                <div class="short">Colchonete/macio para carrinho</div>
+              </div>
+              <div class="row-actions">1 unidade</div>
+            </div>
+            <div class="row-detail" aria-hidden="true">
+              <div class="buy-info">
+                <div><strong>Descrição:</strong> Mais conforto durante passeios no carrinho.</div>
+              </div>
+              <div class="buy-area">
+                <a class="choice-button buy-button" href="https://www.amazon.com.br/gp/product/B0F55TCKZG"
+                  target="_blank" rel="noopener noreferrer">Abrir na Loja</a>
+              </div>
+            </div>
+          </li>
+
+          <li class="item-row" data-url="https://www.amazon.com.br/Mosquiteiro-Para-Carrinho-BUBA-Incolor/dp/B08VH26514"
+            tabindex="0" role="button" aria-expanded="false">
+            <div class="row-main">
+              <div class="item-image" aria-hidden="true">🦟</div>
+              <div class="meta">
+                <div class="name">Mosquiteiro</div>
+                <div class="short">Mosquiteiro para carrinho / berço</div>
+              </div>
+              <div class="row-actions">1 unidade</div>
+            </div>
+            <div class="row-detail" aria-hidden="true">
+              <div class="buy-info">
+                <div><strong>Descrição:</strong> Protege contra insetos durante os passeios e no berço.</div>
+              </div>
+              <div class="buy-area">
+                <a class="choice-button buy-button"
+                  href="https://www.amazon.com.br/Mosquiteiro-Para-Carrinho-BUBA-Incolor/dp/B08VH26514" target="_blank"
+                  rel="noopener noreferrer">Abrir na Loja</a>
+              </div>
+            </div>
+          </li>
+
+          <li class="item-row"
+            data-url="https://www.amazon.com.br/Trocador-Port%C3%A1til-Estrelinhas-Paninho-Unidades/dp/B0DSVCSM5M"
+            tabindex="0" role="button" aria-expanded="false">
+            <div class="row-main">
+              <div class="item-image" aria-hidden="true">🎒</div>
+              <div class="meta">
+                <div class="name">Trocador portátil</div>
+                <div class="short">Trocador dobrável e fácil de carregar</div>
+              </div>
+              <div class="row-actions">1 unidade</div>
+            </div>
+            <div class="row-detail" aria-hidden="true">
+              <div class="buy-info">
+                <div><strong>Descrição:</strong> Ideal para trocar fraldas fora de casa.</div>
+              </div>
+              <div class="buy-area">
+                <a class="choice-button buy-button"
+                  href="https://www.amazon.com.br/Trocador-Port%C3%A1til-Estrelinhas-Paninho-Unidades/dp/B0DSVCSM5M"
+                  target="_blank" rel="noopener noreferrer">Abrir na Loja</a>
+              </div>
+            </div>
+          </li>
+        </ul>
+
+        <!-- Categoria: Quarto & Conforto -->
+        <div class="section-title" style="font-size:16px;margin-top:18px;margin-bottom:8px;text-align:left;">Quarto
+          &amp; Conforto</div>
+        <ul class="items-list">
+          <li class="item-row" data-url="https://www.amazon.com.br/gp/product/B0FGKSQNYD" tabindex="0" role="button"
+            aria-expanded="false">
+            <div class="row-main">
+              <div class="item-image" aria-hidden="true">🛏️</div>
+              <div class="meta">
+                <div class="name">Colchonete berço</div>
+                <div class="short">Colchonete confortável para o berço</div>
+              </div>
+              <div class="row-actions">1 unidade</div>
+            </div>
+            <div class="row-detail" aria-hidden="true">
+              <div class="buy-info">
+                <div><strong>Descrição:</strong> Fornece uma superfície macia para o berço.</div>
+              </div>
+              <div class="buy-area">
+                <a class="choice-button buy-button" href="https://www.amazon.com.br/gp/product/B0FGKSQNYD"
+                  target="_blank" rel="noopener noreferrer">Abrir na Loja</a>
+              </div>
+            </div>
+          </li>
+
+          <li class="item-row"
+            data-url="https://www.amazon.com.br/Eletr%C3%B4nica-Infravermelha-Monitoramento-Temperatura-Bidirecional/dp/B0FDQWFL5X"
+            tabindex="0" role="button" aria-expanded="false">
+            <div class="row-main">
+              <div class="item-image" aria-hidden="true">📡</div>
+              <div class="meta">
+                <div class="name">Babá eletrônica</div>
+                <div class="short">Monitor com áudio/video e avisos de temperatura</div>
+              </div>
+              <div class="row-actions">1 unidade</div>
+            </div>
+            <div class="row-detail" aria-hidden="true">
+              <div class="buy-info">
+                <div><strong>Descrição:</strong> Ajuda a monitorar o sono e segurança do bebê.</div>
+              </div>
+              <div class="buy-area">
+                <a class="choice-button buy-button"
+                  href="https://www.amazon.com.br/Eletr%C3%B4nica-Infravermelha-Monitoramento-Temperatura-Bidirecional/dp/B0FDQWFL5X"
+                  target="_blank" rel="noopener noreferrer">Abrir na Loja</a>
+              </div>
+            </div>
+          </li>
+        </ul>
+
+        <!-- Categoria: Brinquedos & Estímulo -->
+        <div class="section-title" style="font-size:16px;margin-top:18px;margin-bottom:8px;text-align:left;">Brinquedos
+          &amp; Estímulo</div>
+        <ul class="items-list" style="margin-bottom:8px;">
+          <li class="item-row"
+            data-url="https://www.amazon.com.br/Maxi-Baby-Tapete-Gin%C3%A1sio-Atividades/dp/B0DDLFVMLD" tabindex="0"
+            role="button" aria-expanded="false">
+            <div class="row-main">
+              <div class="item-image" aria-hidden="true">🧸</div>
+              <div class="meta">
+                <div class="name">Tapete de atividades</div>
+                <div class="short">Tapete com ginásio de atividades para estímulo sensorial</div>
+              </div>
+              <div class="row-actions">1 unidade</div>
+            </div>
+            <div class="row-detail" aria-hidden="true">
+              <div class="buy-info">
+                <div><strong>Descrição:</strong> Superfície segura e colorida para brincar e tônus motor.</div>
+              </div>
+              <div class="buy-area">
+                <a class="choice-button buy-button"
+                  href="https://www.amazon.com.br/Maxi-Baby-Tapete-Gin%C3%A1sio-Atividades/dp/B0DDLFVMLD"
+                  target="_blank" rel="noopener noreferrer">Abrir na Loja</a>
+              </div>
+            </div>
+          </li>
+
+          <li class="item-row" data-url="https://www.amazon.com.br/s?k=livro+alto+contraste" tabindex="0" role="button"
+            aria-expanded="false">
+            <div class="row-main">
+              <div class="item-image" aria-hidden="true">📘</div>
+              <div class="meta">
+                <div class="name">Livro alto contraste</div>
+                <div class="short">Livros com imagens de alto contraste para recém-nascido</div>
+              </div>
+              <div class="row-actions">1 unidade</div>
+            </div>
+            <div class="row-detail" aria-hidden="true">
+              <div class="buy-info">
+                <div><strong>Descrição:</strong> Estímulo visual precoce e divertido.</div>
+              </div>
+              <div class="buy-area">
+                <a class="choice-button buy-button" href="https://www.amazon.com.br/s?k=livro+alto+contraste"
+                  target="_blank" rel="noopener noreferrer">Abrir na Loja</a>
+              </div>
+            </div>
+          </li>
+
+          <li class="item-row" data-url="https://www.amazon.com.br/s?k=livro+de+banho" tabindex="0" role="button"
+            aria-expanded="false">
+            <div class="row-main">
+              <div class="item-image" aria-hidden="true">🛁</div>
+              <div class="meta">
+                <div class="name">Livro de banho</div>
+                <div class="short">Livros à prova d'água para banho e brincadeira</div>
+              </div>
+              <div class="row-actions">1 unidade</div>
+            </div>
+            <div class="row-detail" aria-hidden="true">
+              <div class="buy-info">
+                <div><strong>Descrição:</strong> Material seguro para brincar durante o banho.</div>
+              </div>
+              <div class="buy-area">
+                <a class="choice-button buy-button" href="https://www.amazon.com.br/s?k=livro+de+banho" target="_blank"
+                  rel="noopener noreferrer">Abrir na Loja</a>
+              </div>
+            </div>
+          </li>
         </ul>
       </section>
     </main>
