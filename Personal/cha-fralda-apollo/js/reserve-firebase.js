@@ -1,5 +1,5 @@
 // Reserva compartilhada via Firebase Firestore + Auth (anônimo).
-// Substitua o objeto FIREBASE_CONFIG abaixo com o config do seu app Firebase.
+// IMPORTANTE: Não coloque chaves sensíveis no repositório. Use injeção em runtime.
 
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.22.1/firebase-app.js';
 import { getAuth, signInAnonymously, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/9.22.1/firebase-auth.js';
@@ -13,14 +13,16 @@ import {
     serverTimestamp
 } from 'https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore.js';
 
-const FIREBASE_CONFIG = {
-    apiKey: "AIzaSyCej0MkYR5l9OCpjpZr5Hcx2jZeXp7hk8o",
-    authDomain: "cha-apollo.firebaseapp.com",
-    projectId: "cha-apollo",
-    storageBucket: "cha-apollo.firebasestorage.app",
-    messagingSenderId: "518245508761",
-    appId: "1:518245508761:web:16ac54df5b029f3f377a08",
-    measurementId: "G-LCMF92SBC8"
+// Carrega a config a partir de uma variável inserida no deploy (window.__FIREBASE_CONFIG__).
+// Se não existir, usamos um fallback não-sensível para evitar expor chaves no repo.
+const FIREBASE_CONFIG = window.__FIREBASE_CONFIG__ || {
+  apiKey: "REDACTED_IN_REPO",
+  authDomain: "cha-apollo.firebaseapp.com",
+  projectId: "cha-apollo",
+  storageBucket: "cha-apollo.firebasestorage.app",
+  messagingSenderId: "518245508761",
+  appId: "1:518245508761:web:16ac54df5b029f3f377a08",
+  measurementId: "G-LCMF92SBC8"
 };
 
 const app = initializeApp(FIREBASE_CONFIG);
