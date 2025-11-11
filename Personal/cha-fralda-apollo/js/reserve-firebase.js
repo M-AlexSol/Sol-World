@@ -14,7 +14,7 @@ import {
 } from 'https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore.js';
 
 const FIREBASE_CONFIG = {
-    apiKey: "AIzaSyA2DAL7nb37MV0sxT4benzpHC_kkYj6G18",
+    apiKey: "AIzaSyCej0MkYR5l9OCpjpZr5Hcx2jZeXp7hk8o",
     authDomain: "cha-apollo.firebaseapp.com",
     projectId: "cha-apollo",
     storageBucket: "cha-apollo.firebasestorage.app",
