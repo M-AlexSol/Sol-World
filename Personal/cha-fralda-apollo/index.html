@@ -12,9 +12,6 @@
   <script src="js/views.js" defer></script>
   <script src="js/copy-pix.js" defer></script>
   <script src="js/items.js" defer></script>
-  <!-- <script src="js/reserve.js" defer></script>
-  <script src="js/reserve-firebase.js" defer></script> -->
-  <!-- local fallback removido para evitar conflitos — usando Firestore -->
   <script src="config.js"></script>
   <script type="module" src="js/reserve-firebase.js" defer></script>
 </head>
@@ -23,15 +20,10 @@
   <div class="container">
     <header class="site-header" style="padding:24px 20px; text-align:center;">
       <h1>Chá de Fralda do Apollo</h1>
-
-      <!-- imagem colocada entre o título e o texto -->
       <img src="images/solarsistem.png" alt="Ilustração do sistema solar" class="header-graphic">
-
       <p class="welcome-text">Bem-vindos ao nosso chá de bebê online! Escolha um presente especial para o nosso novo
         astro!</p>
-
       <div id="countdown-timer" class="countdown-timer" aria-live="polite">Carregando contador...</div>
-
       <div class="choice-buttons" aria-hidden="false" style="margin-top:16px;">
         <button id="btn-pix" class="choice-button" type="button" aria-pressed="false">Fazer PIX</button>
         <button id="btn-list" class="choice-button" type="button" aria-pressed="false">Ver Lista de Presentes</button>
@@ -260,15 +252,16 @@
         <div class="section-title" style="font-size:16px;margin-top:18px;margin-bottom:8px;text-align:left;">Roupinhas
           &amp; Têxteis</div>
         <ul class="items-list">
-          <li class="item-row" data-url="https://www.tiptop.com.br/meninos/bebe-0-a-12-meses" tabindex="0" role="button"
-            aria-expanded="false">
+          <!-- Roupinhas RN - 3 -->
+          <li class="item-row" data-url="https://www.tiptop.com.br/meninos/bebe-0-a-12-meses" data-max="3" tabindex="0"
+            role="button" aria-expanded="false">
             <div class="row-main">
               <div class="item-image" aria-hidden="true">👕</div>
               <div class="meta">
                 <div class="name">Roupinhas RN</div>
                 <div class="short">Roupas tamanho RN para recém-nascido</div>
               </div>
-              <div class="row-actions">várias</div>
+              <div class="row-actions">3 conjuntos</div>
             </div>
             <div class="row-detail" aria-hidden="true">
               <div class="buy-info">
@@ -281,7 +274,8 @@
             </div>
           </li>
 
-          <li class="item-row" data-url="https://www.vestircomamor.com.br/" tabindex="0" role="button"
+          <!-- Roupinhas Tamanho M - 5 -->
+          <li class="item-row" data-url="https://www.vestircomamor.com.br/" data-max="5" tabindex="0" role="button"
             aria-expanded="false">
             <div class="row-main">
               <div class="item-image" aria-hidden="true">🧸</div>
@@ -289,7 +283,7 @@
                 <div class="name">Roupinhas Tamanho M</div>
                 <div class="short">Roupinhas tamanho M (crescimento)</div>
               </div>
-              <div class="row-actions">várias</div>
+              <div class="row-actions">5 conjuntos</div>
             </div>
             <div class="row-detail" aria-hidden="true">
               <div class="buy-info">
@@ -302,15 +296,16 @@
             </div>
           </li>
 
+          <!-- Mantinha - 2 -->
           <li class="item-row" data-url="https://www.amazon.com.br/Mantinha-Ovelhinha-Azul-BUBA/dp/B09888TC4W"
-            tabindex="0" role="button" aria-expanded="false">
+            data-max="2" tabindex="0" role="button" aria-expanded="false">
             <div class="row-main">
               <div class="item-image" aria-hidden="true">🧣</div>
               <div class="meta">
                 <div class="name">Mantinha</div>
                 <div class="short">Manta macia para aconchegar o bebê</div>
               </div>
-              <div class="row-actions">1 unidade</div>
+              <div class="row-actions">2 unidades</div>
             </div>
             <div class="row-detail" aria-hidden="true">
               <div class="buy-info">
@@ -324,15 +319,16 @@
             </div>
           </li>
 
-          <li class="item-row" data-url="https://www.amazon.com.br/s?k=pano+de+boca&i=baby" tabindex="0" role="button"
-            aria-expanded="false">
+          <!-- Pano de boca - 5 -->
+          <li class="item-row" data-url="https://www.amazon.com.br/s?k=pano+de+boca&i=baby" data-max="5" tabindex="0"
+            role="button" aria-expanded="false">
             <div class="row-main">
               <div class="item-image" aria-hidden="true">🧻</div>
               <div class="meta">
                 <div class="name">Pano de boca</div>
                 <div class="short">Panos para limpeza e sucção (paninhos)</div>
               </div>
-              <div class="row-actions">Pacote</div>
+              <div class="row-actions">5 unidades</div>
             </div>
             <div class="row-detail" aria-hidden="true">
               <div class="buy-info">
@@ -345,15 +341,16 @@
             </div>
           </li>
 
-          <li class="item-row" data-url="https://www.lojapapi.com.br/categoria/toalha-de-banho" tabindex="0"
-            role="button" aria-expanded="false">
+          <!-- Toalha de banho - 2 -->
+          <li class="item-row" data-url="https://www.lojapapi.com.br/categoria/toalha-de-banho" data-max="2"
+            tabindex="0" role="button" aria-expanded="false">
             <div class="row-main">
               <div class="item-image" aria-hidden="true">🛁</div>
               <div class="meta">
                 <div class="name">Toalha de banho</div>
                 <div class="short">Toalhas macias para o banho do bebê</div>
               </div>
-              <div class="row-actions">1 unidade</div>
+              <div class="row-actions">2 unidades</div>
             </div>
             <div class="row-detail" aria-hidden="true">
               <div class="buy-info">
@@ -435,29 +432,6 @@
               </div>
             </div>
           </li>
-
-          <li class="item-row"
-            data-url="https://www.amazon.com.br/Trocador-Port%C3%A1til-Estrelinhas-Paninho-Unidades/dp/B0DSVCSM5M"
-            tabindex="0" role="button" aria-expanded="false">
-            <div class="row-main">
-              <div class="item-image" aria-hidden="true">🎒</div>
-              <div class="meta">
-                <div class="name">Trocador portátil</div>
-                <div class="short">Trocador dobrável e fácil de carregar</div>
-              </div>
-              <div class="row-actions">1 unidade</div>
-            </div>
-            <div class="row-detail" aria-hidden="true">
-              <div class="buy-info">
-                <div><strong>Descrição:</strong> Ideal para trocar fraldas fora de casa.</div>
-              </div>
-              <div class="buy-area">
-                <a class="choice-button buy-button"
-                  href="https://www.amazon.com.br/Trocador-Port%C3%A1til-Estrelinhas-Paninho-Unidades/dp/B0DSVCSM5M"
-                  target="_blank" rel="noopener noreferrer">Abrir na Loja</a>
-              </div>
-            </div>
-          </li>
         </ul>
 
         <!-- Categoria: Quarto & Conforto -->
@@ -513,38 +487,16 @@
         <div class="section-title" style="font-size:16px;margin-top:18px;margin-bottom:8px;text-align:left;">Brinquedos
           &amp; Estímulo</div>
         <ul class="items-list" style="margin-bottom:8px;">
-          <li class="item-row"
-            data-url="https://www.amazon.com.br/Maxi-Baby-Tapete-Gin%C3%A1sio-Atividades/dp/B0DDLFVMLD" tabindex="0"
+          <!-- Livro alto contraste - 4 -->
+          <li class="item-row" data-url="https://www.amazon.com.br/s?k=livro+alto+contraste" data-max="4" tabindex="0"
             role="button" aria-expanded="false">
-            <div class="row-main">
-              <div class="item-image" aria-hidden="true">🧸</div>
-              <div class="meta">
-                <div class="name">Tapete de atividades</div>
-                <div class="short">Tapete com ginásio de atividades para estímulo sensorial</div>
-              </div>
-              <div class="row-actions">1 unidade</div>
-            </div>
-            <div class="row-detail" aria-hidden="true">
-              <div class="buy-info">
-                <div><strong>Descrição:</strong> Superfície segura e colorida para brincar e tônus motor.</div>
-              </div>
-              <div class="buy-area">
-                <a class="choice-button buy-button"
-                  href="https://www.amazon.com.br/Maxi-Baby-Tapete-Gin%C3%A1sio-Atividades/dp/B0DDLFVMLD"
-                  target="_blank" rel="noopener noreferrer">Abrir na Loja</a>
-              </div>
-            </div>
-          </li>
-
-          <li class="item-row" data-url="https://www.amazon.com.br/s?k=livro+alto+contraste" tabindex="0" role="button"
-            aria-expanded="false">
             <div class="row-main">
               <div class="item-image" aria-hidden="true">📘</div>
               <div class="meta">
                 <div class="name">Livro alto contraste</div>
                 <div class="short">Livros com imagens de alto contraste para recém-nascido</div>
               </div>
-              <div class="row-actions">1 unidade</div>
+              <div class="row-actions">4 unidades</div>
             </div>
             <div class="row-detail" aria-hidden="true">
               <div class="buy-info">
@@ -557,15 +509,16 @@
             </div>
           </li>
 
-          <li class="item-row" data-url="https://www.amazon.com.br/s?k=livro+de+banho" tabindex="0" role="button"
-            aria-expanded="false">
+          <!-- Livro de banho - 2 -->
+          <li class="item-row" data-url="https://www.amazon.com.br/s?k=livro+de+banho" data-max="2" tabindex="0"
+            role="button" aria-expanded="false">
             <div class="row-main">
               <div class="item-image" aria-hidden="true">🛁</div>
               <div class="meta">
                 <div class="name">Livro de banho</div>
                 <div class="short">Livros à prova d'água para banho e brincadeira</div>
               </div>
-              <div class="row-actions">1 unidade</div>
+              <div class="row-actions">2 unidades</div>
             </div>
             <div class="row-detail" aria-hidden="true">
               <div class="buy-info">

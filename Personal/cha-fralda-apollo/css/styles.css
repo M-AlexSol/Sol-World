@@ -643,3 +643,34 @@ button.buy-button.primary {
   background: linear-gradient(135deg, var(--accent), #357abd);
   color: #fff;
 }
+
+/* Modal de agradecimento da reserva */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.45);
+  z-index: 1200;
+}
+
+.modal-dialog {
+  background: #fff;
+  padding: 18px;
+  border-radius: 10px;
+  max-width: 520px;
+  width: 92%;
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.25);
+  color: #111;
+}
+
+.modal-dialog h3 {
+  font-size: 1.1rem;
+  margin-bottom: 8px;
+}
+
+.modal-dialog p {
+  margin: 0;
+  line-height: 1.4;
+}
