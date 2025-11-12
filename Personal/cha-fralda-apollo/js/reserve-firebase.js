@@ -137,7 +137,13 @@ function renderReservedUIRemote(row, data) {
                     const newHolders = curHolders.filter(h => !(h.uid && h.uid === currentUid));
                     const newTotal = newHolders.reduce((s, h) => s + (h.qty || 0), 0);
                     if (newHolders.length === 0) {
-                        tx.delete(docRef);
+                        // Não deletar — regras proíbem delete. Em vez disso, gravamos um documento "vazio"
+                        tx.set(docRef, {
+                            max: cur.max || max,
+                            holders: [],
+                            reservedTotal: 0,
+                            updatedAt: serverTimestamp()
+                        });
                     } else {
                         tx.set(docRef, {
                             max: cur.max || max,
