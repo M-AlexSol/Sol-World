@@ -155,7 +155,86 @@ function renderReservedUIRemote(row, data) {
         });
         buyArea.appendChild(undo);
     } else {
-        // if remaining > 0 the buy area (reserve button) will be rebuilt by initRow/buildBuyAreaLocal
+        // If user is not a holder and there's remaining units, show Reserve button + shop link
+        if (remaining > 0) {
+            // create shop link
+            const buyAnchor = document.createElement('a');
+            buyAnchor.className = 'choice-button buy-button';
+            buyAnchor.href = row.dataset.url || '#';
+            buyAnchor.target = '_blank';
+            buyAnchor.rel = 'noopener noreferrer';
+            buyAnchor.textContent = 'Abrir na Loja';
+            buyArea.appendChild(buyAnchor);
+
+            // create reserve button
+            const reserveBtn = document.createElement('button');
+            reserveBtn.className = 'reserve-button';
+            reserveBtn.type = 'button';
+            reserveBtn.textContent = `Reservar (${remaining} disponíveis)`;
+            reserveBtn.addEventListener('click', async (ev) => {
+                ev.preventDefault();
+                const url = row.dataset.url;
+                const declaredMax = row.dataset.max ? parseInt(row.dataset.max, 10) : 1;
+                const name = prompt('Tem certeza? (Opcional) Digite seu nome para aparecer na reserva.\nDeixe vazio para "Reservado com carinho".', '') || '';
+                if (name === null) return;
+
+                try {
+                    const docRef = doc(db, 'reservas', docIdFromUrl(url));
+                    // re-check and transact
+                    await runTransaction(db, async (tx) => {
+                        const s = await tx.get(docRef);
+                        const base = s.exists() ? (s.data() || {}) : {};
+                        const curMax = (typeof base.max === 'number') ? base.max : declaredMax || 1;
+                        const curHolders = Array.isArray(base.holders) ? base.holders.slice() : [];
+                        const curTotal = curHolders.reduce((ss, h) => ss + (h.qty || 0), 0);
+                        const curRemaining = Math.max(0, curMax - curTotal);
+                        if (curRemaining <= 0) throw new Error('Desculpe — não há mais unidades disponíveis desse item.');
+
+                        let qtyStr = prompt(`Quantos desse item você quer reservar? Disponíveis: ${curRemaining}`, '1');
+                        if (qtyStr === null) return;
+                        const qty = Math.max(0, parseInt(qtyStr, 10) || 0);
+                        if (!qty || qty < 1 || qty > curRemaining) { throw new Error('Quantidade inválida ou acima do disponível.'); }
+
+                        let updated = false;
+                        if (currentUid) {
+                            for (let i = 0; i < curHolders.length; i++) {
+                                const h = curHolders[i];
+                                if (h.uid && h.uid === currentUid) {
+                                    curHolders[i] = {
+                                        uid: h.uid,
+                                        name: name || h.name || '',
+                                        qty: (h.qty || 0) + qty,
+                                        ts: Date.now()
+                                    };
+                                    updated = true;
+                                    break;
+                                }
+                            }
+                        }
+                        if (!updated) {
+                            curHolders.push({
+                                uid: currentUid || null,
+                                name: name || '',
+                                qty: qty,
+                                ts: Date.now()
+                            });
+                        }
+                        const newTotal = curHolders.reduce((ss, h) => ss + (h.qty || 0), 0);
+                        tx.set(docRef, {
+                            max: curMax,
+                            holders: curHolders,
+                            reservedTotal: newTotal,
+                            updatedAt: serverTimestamp()
+                        });
+                    });
+                    showThankYouModal();
+                } catch (err) {
+                    console.error('[reserve-firebase] Erro ao reservar (detalhe):', err);
+                    alert('Não foi possível reservar: ' + (err && err.message ? err.message : String(err)));
+                }
+            });
+            buyArea.appendChild(reserveBtn);
+        }
     }
 
     if (remaining === 0) {
