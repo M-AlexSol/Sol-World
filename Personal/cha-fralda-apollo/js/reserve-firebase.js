@@ -82,6 +82,7 @@ function docIdFromUrl(url) {
 }
 
 // ---------- UI renderers (multi-quantidade) ----------
+// ...existing code...
 function renderReservedUIRemote(row, data) {
     // data: { max, holders: [{ uid, name, qty, ts }], reservedTotal }
     const buyArea = row.querySelector('.buy-area');
@@ -95,27 +96,32 @@ function renderReservedUIRemote(row, data) {
     const max = (typeof data.max === 'number') ? data.max : (parseInt(row.dataset.max, 10) || 1);
     const remaining = Math.max(0, max - reservedTotal);
 
+    // Se não houver reservas (holders vazio e reservedTotal == 0), renderizamos a UI inicial
+    // (como se o doc não existisse): link "Sugestão de Loja" + "Reservar".
+    if (!holders.length || reservedTotal === 0) {
+        // buildBuyAreaLocal também trata do modo Firebase (usa getDoc/runTransaction ao reservar)
+        buildBuyAreaLocal(row);
+        row.classList.remove('reserved');
+        row.removeAttribute('aria-disabled');
+        row.dataset.remaining = String(max);
+        return;
+    }
+
     const badge = document.createElement('span');
     badge.className = 'reserved-badge';
 
-    if (holders.length === 0) {
-        const text = document.createElement('span');
-        text.textContent = 'Reservado';
-        badge.appendChild(text);
-    } else {
-        const text = document.createElement('span');
-        text.textContent = 'Reservado por: ';
-        badge.appendChild(text);
+    const text = document.createElement('span');
+    text.textContent = 'Reservado por: ';
+    badge.appendChild(text);
 
-        const list = document.createElement('span');
-        list.className = 'reserved-list';
-        const parts = holders.map(h => {
-            const name = (h.name && h.name.trim()) ? h.name.trim() : (h.uid ? 'Convidado' : 'Reservado');
-            return `${name} (${h.qty || 1})`;
-        });
-        list.textContent = parts.join(', ');
-        badge.appendChild(list);
-    }
+    const list = document.createElement('span');
+    list.className = 'reserved-list';
+    const parts = holders.map(h => {
+        const name = (h.name && h.name.trim()) ? h.name.trim() : (h.uid ? 'Convidado' : 'Reservado');
+        return `${name} (${h.qty || 1})`;
+    });
+    list.textContent = parts.join(', ');
+    badge.appendChild(list);
 
     buyArea.appendChild(badge);
 
@@ -169,7 +175,7 @@ function renderReservedUIRemote(row, data) {
             buyAnchor.href = row.dataset.url || '#';
             buyAnchor.target = '_blank';
             buyAnchor.rel = 'noopener noreferrer';
-            buyAnchor.textContent = 'Abrir na Loja';
+            buyAnchor.textContent = 'Sugestão de Loja';
             buyArea.appendChild(buyAnchor);
 
             // create reserve button
@@ -181,7 +187,7 @@ function renderReservedUIRemote(row, data) {
                 ev.preventDefault();
                 const url = row.dataset.url;
                 const declaredMax = row.dataset.max ? parseInt(row.dataset.max, 10) : 1;
-                const name = prompt('Tem certeza? (Opcional) Digite seu nome para aparecer na reserva.\nDeixe vazio para "Reservado com carinho".', '') || '';
+                const name = prompt('Que bom que já escolheu o presente!\nLembrando que após confirmar, outras pessoas não terão opção de reserva!\n\nSe possível, digite seu nome para sabermos que está nos ajudando.', '') || '';
                 if (name === null) return;
 
                 try {
@@ -263,26 +269,29 @@ function renderReservedUILocal(row, url) {
     const max = meta.max || parseInt(row.dataset.max, 10) || 1;
     const remaining = Math.max(0, max - reservedTotal);
 
+    // Se não houver holders locais, renderiza UI inicial
+    if (!holders.length || reservedTotal === 0) {
+        buildBuyAreaLocal(row);
+        row.classList.remove('reserved');
+        row.removeAttribute('aria-disabled');
+        row.dataset.remaining = String(max);
+        return;
+    }
+
     const badge = document.createElement('span');
     badge.className = 'reserved-badge';
 
-    if (holders.length === 0) {
-        const text = document.createElement('span');
-        text.textContent = 'Reservado';
-        badge.appendChild(text);
-    } else {
-        const text = document.createElement('span');
-        text.textContent = 'Reservado por: ';
-        badge.appendChild(text);
-        const list = document.createElement('span');
-        list.className = 'reserved-list';
-        const parts = holders.map(h => {
-            const name = h.name && h.name.trim() ? h.name.trim() : 'Convidado';
-            return `${name} (${h.qty || 1})`;
-        });
-        list.textContent = parts.join(', ');
-        badge.appendChild(list);
-    }
+    const text = document.createElement('span');
+    text.textContent = 'Reservado por: ';
+    badge.appendChild(text);
+    const list = document.createElement('span');
+    list.className = 'reserved-list';
+    const parts = holders.map(h => {
+        const name = h.name && h.name.trim() ? h.name.trim() : 'Convidado';
+        return `${name} (${h.qty || 1})`;
+    });
+    list.textContent = parts.join(', ');
+    badge.appendChild(list);
 
     buyArea.appendChild(badge);
 
@@ -322,7 +331,11 @@ function showThankYouModal() {
     overlay.className = 'modal-overlay';
     overlay.innerHTML = `
     <div class="modal-dialog" role="dialog" aria-modal="true" aria-labelledby="thanks-title">
-      <h3 id="thanks-title" style="margin-top:0;">Obrigada!</h3>
+      <h3 id="thanks-title" style="margin-top:0;text-align:center;">Obrigado!</h3>
+
+      <!-- Imagem do Apollo (ajustada em escala pequena/responsiva) -->
+      <img src="images/apollo.jpeg" alt="Foto do Apollo" style="display:block; margin:10px auto; width:160px; max-width:40%; height:auto; border-radius:8px; object-fit:cover;" />
+
       <p>Nós, da Família Fagundes Sol, agradecemos de todo o coração pelo presente! Que venha com saúde e muito amor, Apollo!!</p>
       <div style="text-align:center; margin-top:12px;">
         <button id="thanks-ok" class="choice-button" type="button">Fechar</button>
@@ -349,7 +362,7 @@ function buildBuyAreaLocal(row) {
     buyAnchor.href = url || '#';
     buyAnchor.target = '_blank';
     buyAnchor.rel = 'noopener noreferrer';
-    buyAnchor.textContent = 'Abrir na Loja';
+    buyAnchor.textContent = 'Sugestão de Loja';
 
     const reserveBtn = document.createElement('button');
     reserveBtn.className = 'reserve-button';
@@ -364,7 +377,7 @@ function buildBuyAreaLocal(row) {
         const declaredMax = row.dataset.max ? parseInt(row.dataset.max, 10) : 1;
         console.log('[reserve-firebase] Reservar clicado — url=', url, ' currentUid=', currentUid, ' USE_FIREBASE=', USE_FIREBASE, ' declaredMax=', declaredMax);
 
-        const name = prompt('Tem certeza? (Opcional) Digite seu nome para aparecer na reserva.\nDeixe vazio para "Reservado com carinho".', '') || '';
+        const name = prompt('Que bom que já escolheu o presente!\nLembrando que após confirmar, outras pessoas não terão opção de reserva!\n\nSe possível, digite seu nome para sabermos que está nos ajudando.', '') || '';
         if (name === null) return;
 
         if (USE_FIREBASE) {

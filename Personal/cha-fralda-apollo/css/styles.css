@@ -366,6 +366,17 @@ p {
   }
 }
 
+/* Ajuste para imagens que substituem os emojis na lista (mantém tamanho e centralização) */
+.row-main .item-image img,
+.row-main .item-image .item-emoji {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: inline-block;
+  vertical-align: middle;
+  border-radius: 8px; /* combina com o background arredondado do container */
+}
+
 /* Estiliza o link "Comprar Presente" para ficar igual ao botão de copiar PIX */
 a.buy-button,
 button.buy-button {

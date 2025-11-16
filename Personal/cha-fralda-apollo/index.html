@@ -21,7 +21,8 @@
     <header class="site-header" style="padding:24px 20px; text-align:center;">
       <h1>Chá de Fralda do Apollo</h1>
       <img src="images/solarsistem.png" alt="Ilustração do sistema solar" class="header-graphic">
-      <p class="welcome-text">Bem-vindos ao nosso chá de bebê online! Escolha um presente especial para o nosso novo
+      <p class="welcome-text">Bem-vindos ao nosso chá de bebê online!<br> Fique a vontade para escolher um presente
+        especial para o nosso novo
         astro!</p>
       <div id="countdown-timer" class="countdown-timer" aria-live="polite">Carregando contador...</div>
       <div class="choice-buttons" aria-hidden="false" style="margin-top:16px;">
@@ -33,14 +34,16 @@
     <main style="width:100%;max-width:1200px;margin:0 auto;padding:0px;">
       <section id="home-view" class="view-container panel">
         <h2 class="section-title">Toda ajuda é bem vinda!</h2>
-        <p>Escolha "<b>Ver Lista de Presentes</b>" para abrir as opções disponíveis de presentes para o Apollo ou
+        <p style="text-align: center;">Você pode optar entre "<b>Ver Lista de Presentes</b>", para abrir as opções de
+          presentes para o Apollo que os papais escolheram com muito carinho, ou
           "<b>Faça um PIX</b>" para nos ajudar com as futuras fraldas!</p>
       </section>
 
       <section id="pix-view" class="view-container panel hidden" aria-hidden="true">
         <h2 class="section-title"> Fazer PIX</h2>
-        <p>Abaixo estão os dados para realizar o PIX. Use o QR Code no app do seu banco ou copie a chave.</p>
-
+        <p style="text-align: center;">Abaixo estão os dados para realizar o PIX. Use o QR Code no app do seu banco ou
+          copie a chave.</p>
+        <br>
         <div id="pix-data" style="margin-top:10px;">
           <p><strong>Chave PIX:</strong> 857ed555-b4b6-4606-a688-931e35a388df</p>
           <p><strong>Nome:</strong> Matheus Alexander Sol</p>
@@ -60,19 +63,22 @@
 
       <section id="list-view" class="view-container panel hidden" aria-hidden="true">
         <h2 class="section-title">Lista de Presentes</h2>
-        <p style="margin-top:6px;text-align: center;">Caso compre online e queira enviar para o nosso endereço, entre em contato no nosso
-          WhatsApp que enviaremos o endereço!<br><b>Link WhatsApp:</b> <a href="https://wa.me/5527998830043" target="_blank"
-            rel="noopener noreferrer">wa.me/5527998830043</a><hr
-        </p>
+        <p style="margin-top:6px;text-align: center;">Caso compre online e queira enviar para o nosso endereço, entre em
+          contato no nosso
+          WhatsApp que enviaremos a localização!<br><b>Link WhatsApp:</b> <a href="https://wa.me/5527998830043"
+            target="_blank" rel="noopener noreferrer">wa.me/5527998830043</a>
+          <hr </p>
 
-        <!-- Categoria: Higiene & Cuidados -->
+          <!-- Categoria: Higiene & Cuidados -->
         <div class="section-title" style="font-size:16px;margin-top:6px;margin-bottom:8px;text-align:left;">Higiene
           &amp; Cuidados</div>
         <ul class="items-list" id="items-grid-copy">
           <li class="item-row" data-url="https://www.amazon.com.br/Kit-Escova-Pente-Cerdas-Naturais/dp/B07QBHVG4R"
             tabindex="0" role="button" aria-expanded="false">
             <div class="row-main">
-              <div class="item-image" aria-hidden="true">🪥</div>
+              <div class="item-image" aria-hidden="true">
+                <img src="images/pente-cabelo.png" alt="Escova e Pente" class="item-emoji" />
+              </div>
               <div class="meta">
                 <div class="name">Escova e Pente</div>
                 <div class="short">Kit de escova e pente com cerdas suaves para bebê</div>
@@ -94,7 +100,7 @@
           <li class="item-row" data-url="https://www.amazon.com.br/gp/product/B0DNR559V1" tabindex="0" role="button"
             aria-expanded="false">
             <div class="row-main">
-              <div class="item-image" aria-hidden="true">💅</div>
+              <div class="item-image" aria-hidden="true">🖐🏻</div>
               <div class="meta">
                 <div class="name">Lixa de unha</div>
                 <div class="short">Lixas apropriadas para unhas de bebê</div>
@@ -138,7 +144,7 @@
             data-url="https://www.amazon.com.br/Aspirador-Nasal-Suc%C3%A7%C3%A3o-Seringa-Buba/dp/B0BVG9B3NF"
             tabindex="0" role="button" aria-expanded="false">
             <div class="row-main">
-              <div class="item-image" aria-hidden="true">👃</div>
+              <div class="item-image" aria-hidden="true">👃🏻</div>
               <div class="meta">
                 <div class="name">Aspirador nasal</div>
                 <div class="short">Aspirador para limpeza nasal do bebê</div>
@@ -260,9 +266,11 @@
           <li class="item-row" data-url="https://www.tiptop.com.br/meninos/bebe-0-a-12-meses" data-max="3" tabindex="0"
             role="button" aria-expanded="false">
             <div class="row-main">
-              <div class="item-image" aria-hidden="true">👕</div>
+              <div class="item-image" aria-hidden="true">
+                <img src="images/roupa-rn.png" alt="Roupinhas Tamanho RN" class="item-emoji" />
+              </div>
               <div class="meta">
-                <div class="name">Roupinhas RN</div>
+                <div class="name">Roupinhas Tamanho RN</div>
                 <div class="short">Roupas tamanho RN para recém-nascido</div>
               </div>
               <div class="row-actions">3 conjuntos</div>
@@ -282,7 +290,9 @@
           <li class="item-row" data-url="https://www.vestircomamor.com.br/" data-max="5" tabindex="0" role="button"
             aria-expanded="false">
             <div class="row-main">
-              <div class="item-image" aria-hidden="true">🧸</div>
+              <div class="item-image" aria-hidden="true">
+                <img src="images/roupa-m.png" alt="Roupinhas Tamanho M" class="item-emoji" />
+              </div>
               <div class="meta">
                 <div class="name">Roupinhas Tamanho M</div>
                 <div class="short">Roupinhas tamanho M (crescimento)</div>
@@ -304,7 +314,9 @@
           <li class="item-row" data-url="https://www.amazon.com.br/Mantinha-Ovelhinha-Azul-BUBA/dp/B09888TC4W"
             data-max="2" tabindex="0" role="button" aria-expanded="false">
             <div class="row-main">
-              <div class="item-image" aria-hidden="true">🧣</div>
+              <div class="item-image" aria-hidden="true">
+                <img src="images/manta.png" alt="Mantinha" class="item-emoji" />
+              </div>
               <div class="meta">
                 <div class="name">Mantinha</div>
                 <div class="short">Manta macia para aconchegar o bebê</div>
@@ -327,7 +339,9 @@
           <li class="item-row" data-url="https://www.amazon.com.br/s?k=pano+de+boca&i=baby" data-max="5" tabindex="0"
             role="button" aria-expanded="false">
             <div class="row-main">
-              <div class="item-image" aria-hidden="true">🧻</div>
+              <div class="item-image" aria-hidden="true">
+                <img src="images/lenco.png" alt="Pano de boca" class="item-emoji" />
+              </div>
               <div class="meta">
                 <div class="name">Pano de boca</div>
                 <div class="short">Panos para limpeza e sucção (paninhos)</div>
@@ -399,7 +413,7 @@
             <div class="row-main">
               <div class="item-image" aria-hidden="true">🛏️</div>
               <div class="meta">
-                <div class="name">Colchonete Carrinho</div>
+                <div class="name">Colchonete de Carrinho</div>
                 <div class="short">Colchonete/macio para carrinho</div>
               </div>
               <div class="row-actions">1 unidade</div>
@@ -447,7 +461,7 @@
             <div class="row-main">
               <div class="item-image" aria-hidden="true">🛏️</div>
               <div class="meta">
-                <div class="name">Colchonete berço</div>
+                <div class="name">Colchonete de Berço</div>
                 <div class="short">Colchonete confortável para o berço</div>
               </div>
               <div class="row-actions">1 unidade</div>
@@ -467,7 +481,9 @@
             data-url="https://www.amazon.com.br/Eletr%C3%B4nica-Infravermelha-Monitoramento-Temperatura-Bidirecional/dp/B0FDQWFL5X"
             tabindex="0" role="button" aria-expanded="false">
             <div class="row-main">
-              <div class="item-image" aria-hidden="true">📡</div>
+              <div class="item-image" aria-hidden="true">
+                <img src="images/baba-eletr.png" alt="Babá eletrônica" class="item-emoji" />
+              </div>
               <div class="meta">
                 <div class="name">Babá eletrônica</div>
                 <div class="short">Monitor com áudio/video e avisos de temperatura</div>
@@ -497,7 +513,7 @@
             <div class="row-main">
               <div class="item-image" aria-hidden="true">📘</div>
               <div class="meta">
-                <div class="name">Livro alto contraste</div>
+                <div class="name">Livro Alto Contraste</div>
                 <div class="short">Livros com imagens de alto contraste para recém-nascido</div>
               </div>
               <div class="row-actions">4 unidades</div>
@@ -519,7 +535,7 @@
             <div class="row-main">
               <div class="item-image" aria-hidden="true">🛁</div>
               <div class="meta">
-                <div class="name">Livro de banho</div>
+                <div class="name">Livro de Banho</div>
                 <div class="short">Livros à prova d'água para banho e brincadeira</div>
               </div>
               <div class="row-actions">2 unidades</div>
@@ -530,6 +546,28 @@
               </div>
               <div class="buy-area">
                 <a class="choice-button buy-button" href="https://www.amazon.com.br/s?k=livro+de+banho" target="_blank"
+                  rel="noopener noreferrer">Sugestão de Loja</a>
+              </div>
+            </div>
+          </li>
+
+          <!-- Tapete de Atividades - 3 -->
+          <li class="item-row" data-url="https://www.amazon.com.br/Maxi-Baby-Tapete-Gin%C3%A1sio-Atividades/dp/B0DDLFVMLD/ref=sr_1_25?dib_ta" tabindex="0"
+            role="button" aria-expanded="false">
+            <div class="row-main">
+              <div class="item-image" aria-hidden="true">🛁</div>
+              <div class="meta">
+                <div class="name">Tummy Time</div>
+                <div class="short">Tapete interativo de atividades motoras e sensoriais</div>
+              </div>
+              <div class="row-actions">1 unidade</div>
+            </div>
+            <div class="row-detail" aria-hidden="true">
+              <div class="buy-info">
+                <div><strong>Descrição:</strong> Tapete interativo de atividades motoras e sensoriais.</div>
+              </div>
+              <div class="buy-area">
+                <a class="choice-button buy-button" href="https://www.amazon.com.br/Maxi-Baby-Tapete-Gin%C3%A1sio-Atividades/dp/B0DDLFVMLD/ref=sr_1_25?dib_ta" target="_blank"
                   rel="noopener noreferrer">Sugestão de Loja</a>
               </div>
             </div>

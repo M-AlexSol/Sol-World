@@ -86,7 +86,7 @@
     buyAnchor.href = url || '#';
     buyAnchor.target = '_blank';
     buyAnchor.rel = 'noopener noreferrer';
-    buyAnchor.textContent = 'Abrir na Loja';
+    buyAnchor.textContent = 'Sugestão de Loja';
 
     // create reserve button
     const reserveBtn = document.createElement('button');
@@ -100,7 +100,7 @@
     // attach behavior on reserve button
     reserveBtn.addEventListener('click', async (ev) => {
       ev.preventDefault();
-      const msg = 'Tem certeza? O item ficará indisponível para quem visualizar a página neste navegador.';
+      const msg = 'Que bom que já escolheu o presente!\nLembrando que após confirmar, outras pessoas não terão opção de reserva!\n\nSe possível, digite seu nome para sabermos que está nos ajudando.';
       const resp = await confirmModal(msg);
       if (!resp || !resp.ok) return;
       // save reservation with optional name
