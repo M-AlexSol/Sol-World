@@ -375,7 +375,7 @@ function buildBuyAreaLocal(row) {
     reserveBtn.addEventListener('click', async (ev) => {
         ev.preventDefault();
         const declaredMax = row.dataset.max ? parseInt(row.dataset.max, 10) : 1;
-        const name = prompt('Que bom que já escolheu o presente!\nLembrando que após confirmar, outras pessoas não terão opção de reserva!\n\nSe possível, digite seu nome para sabermos que está nos ajudando.', '');
+        const name = prompt('Que bom que já escolheu o presente!\nLembrando que após confirmar, outras pessoas não terão opção de reserva!\n\nSe possível, digite seu nome para sabermos quem está nos ajudando.', '');
         if (name === null) return;
 
         if (USE_FIREBASE) {
