@@ -100,7 +100,7 @@
     // attach behavior on reserve button
     reserveBtn.addEventListener('click', async (ev) => {
       ev.preventDefault();
-      const msg = 'Que bom que já escolheu o presente!\nLembrando que após confirmar, outras pessoas não terão opção de reserva!\n\nSe possível, digite seu nome para sabermos que está nos ajudando.';
+      const msg = 'Que bom que já escolheu o presente!\nLembrando que após confirmar, outras pessoas não terão opção de reserva!\n\nSe possível, digite seu nome para sabermos quem está nos ajudando.';
       const resp = await confirmModal(msg);
       if (!resp || !resp.ok) return;
       // save reservation with optional name
